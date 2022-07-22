@@ -1,0 +1,12 @@
+﻿<MudGrid Justify="Justify.Center">
+    <MudItem><MudText Align="Align.Center" Typo="Typo.h5">Check out these cool games!</MudText></MudItem>
+    <MudItem xs="12"><MudDivider DividerType="DividerType.Middle" /></MudItem>
+    @foreach (IGame game in games)
+    {
+        <MudItem Style="padding: 20px; border-radius:25%;" xs="3">
+            <a href="@game.Route">
+                <MudImage Fluid="true" Elevation="10" Src="@game.ImageRoute" Class="rounded-lg" />
+            </a>
+        </MudItem>
+    }
+</MudGrid>

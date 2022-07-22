@@ -1,0 +1,52 @@
+﻿@page "/deck"
+@using Games.Components
+
+<PageTitle>Deck</PageTitle>
+
+<MudText Align="Align.Center" Typo="Typo.h5">Deck Testing</MudText>
+
+<MudGrid Justify="Justify.Center">
+    <MudItem xs="12"><MudDivider DividerType="DividerType.Middle" /></MudItem>
+    <MudItem>
+        @foreach (Card card in _deck.Cards)
+        {
+            <CardComponent _card="card" />
+        }
+    </MudItem>
+    <MudItem xs="12"><MudSpacer /></MudItem>
+    <MudItem>
+        <CardComponent _card="@Deck.CardBack" />
+    </MudItem>
+    <MudItem>
+        <MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary" Style="margin: 20px" OnClick="Shuffle">Shuffle</MudButton>
+        <MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary" Style="margin: 20px" OnClick="Draw">Draw</MudButton>
+    </MudItem>
+    <MudItem>
+        <CardComponent _card="@Deck.CardBack" />
+    </MudItem>
+    <MudItem xs="12"><MudSpacer /></MudItem>
+    <MudItem>
+        <MudText Align="Align.Center" Typo="Typo.subtitle1">Drawn Cards</MudText>
+        @foreach (Card card in cards)
+        {
+            <CardComponent _card="card" />
+        }
+    </MudItem>
+</MudGrid>
+
+@code {
+    public Deck _deck = new Deck();
+
+    public List<Card> cards = new List<Card>();
+
+    public void Shuffle()
+    {
+        _deck.Shuffle();
+        StateHasChanged();
+    }
+    public void Draw()
+    {
+        cards.Add(_deck.DrawCard());
+        StateHasChanged();
+    }
+}

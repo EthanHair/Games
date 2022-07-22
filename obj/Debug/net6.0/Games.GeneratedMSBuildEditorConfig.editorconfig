@@ -1,0 +1,59 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = browser
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = true
+build_property.IncludeAllContentForSelfExtract = 
+build_property.RootNamespace = Games
+build_property.RootNamespace = Games
+build_property.ProjectDir = C:\Users\EthanHair\source\repos\Games\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\EthanHair\source\repos\Games
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/EthanHair/source/repos/Games/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EthanHair/source/repos/Games/Components/CardComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xDYXJkQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EthanHair/source/repos/Games/Components/GameList.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xHYW1lTGlzdC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EthanHair/source/repos/Games/Pages/DeckPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVja1BhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EthanHair/source/repos/Games/Pages/Index.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXgucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EthanHair/source/repos/Games/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/EthanHair/source/repos/Games/Pages/BlackjackPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmxhY2tqYWNrUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-zxn73lryos
+
+[C:/Users/EthanHair/source/repos/Games/Pages/SolitairePage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU29saXRhaXJlUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-noxtgoetw1
+
+[C:/Users/EthanHair/source/repos/Games/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-d43zj6zlhp
+
+[C:/Users/EthanHair/source/repos/Games/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-d0qnm21bx8

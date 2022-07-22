@@ -1,0 +1,104 @@
+﻿@page "/blackjack"
+@using Games.Components
+@implements IDisposable
+
+<PageTitle>Blackjack</PageTitle>
+
+<MudText Align="Align.Center" Typo="Typo.h5">@_blackjackGame.Name</MudText>
+
+@if (!gameStart)
+{
+    <MudGrid Justify="Justify.Center">
+        <MudItem><MudText Style="margin: 20px" Typo="Typo.subtitle1">@_blackjackGame.Description</MudText></MudItem>
+        <MudItem xs="12"><MudDivider DividerType="DividerType.Middle" /></MudItem>
+        <MudItem>
+            <MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary" Style="margin: 20px" OnClick="StartGame">Start Game</MudButton>
+        </MudItem>
+    </MudGrid>
+}
+else
+{
+    @if (gameOver)
+    {
+        <MudGrid Justify="Justify.Center">
+            <MudItem xs="12"><MudSpacer /></MudItem>
+            <MudItem><MudText Typo="Typo.h6">Game Over</MudText></MudItem>
+            <MudItem xs="12"><MudDivider DividerType="DividerType.Middle" /></MudItem>
+            <MudItem>
+                <MudText Typo="Typo.subtitle1">@winner Won</MudText>
+            </MudItem>
+            <MudItem xs="12"><MudSpacer /></MudItem>
+            <MudItem xs="5">
+                <div style="float: right">
+                    @foreach (Card card in _blackjackGame.PlayerHand)
+                    {
+                        <CardComponent _card="card" />
+                    }
+                    <MudText Align="Align.Right" Typo="Typo.body1">Your Score: @_blackjackGame.GetPlayerHandScore()</MudText>
+                </div>
+            </MudItem>
+            <MudItem xs="2"></MudItem>
+            <MudItem xs="5">
+                @foreach (Card card in _blackjackGame.DealerHand)
+                {
+                    <CardComponent _card="card" />
+                }
+                <MudText Align="Align.Left" Typo="Typo.body1">Dealer Score: @_blackjackGame.GetDealerHandScore()</MudText>
+            </MudItem>
+            <MudItem xs="12"><MudSpacer /></MudItem>
+            <MudItem>
+                <MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary" Style="margin: 20px" OnClick="Reset">Reset</MudButton>
+            </MudItem>
+        </MudGrid>
+
+        
+    }
+    else
+    {
+        <div class="blackjack-board">
+            <MudGrid Justify="Justify.Center">
+                <MudItem xs="12"><MudSpacer /></MudItem>
+                <MudItem>
+                    @foreach (Card card in _blackjackGame.DealerHand)
+                    {
+                        <CardComponent _card="@Deck.CardBack" />
+                    }
+                </MudItem>
+                <MudItem xs="12"><MudSpacer /></MudItem>
+                <MudItem>
+                    <CardComponent _card="@Deck.CardBack" />
+                </MudItem>
+                <MudItem xs="12"><MudSpacer /></MudItem>
+                <MudItem>
+                    @foreach (Card card in _blackjackGame.PlayerHand)
+                    {
+                        <CardComponent _card="card" />
+                    }
+                </MudItem>
+                <MudItem>
+                    <MudGrid Justify="Justify.Center">
+                        <MudItem><MudChip Color="Color.Dark">Score: @_blackjackGame.GetPlayerHandScore()</MudChip></MudItem>
+                        <MudItem xs="12"><MudSpacer /></MudItem>
+                        <MudItem>
+                            <MudButton Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary" Style="margin: 10px" OnClick="PlayerHit">Hit</MudButton>
+                        </MudItem>
+                        <MudItem>
+                            @if (!_processing)
+                            {
+                                <MudButton OnClick="PlayerStay" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" Style="margin: 10px">
+                                    Stay
+                                </MudButton>
+                            }
+                            else
+                            {
+                                <MudButton Disabled="true" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" Style="margin: 10px">
+                                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                                </MudButton>
+                            }
+                        </MudItem>
+                    </MudGrid>
+                </MudItem>
+            </MudGrid>
+        </div>
+    }
+}

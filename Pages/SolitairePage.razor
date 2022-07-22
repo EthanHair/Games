@@ -1,0 +1,83 @@
+﻿@page "/solitaire"
+@using Games.Components
+
+<PageTitle>Solitaire</PageTitle>
+
+<MudText Align="Align.Center" Typo="Typo.h5">@_solitaireGame.Name</MudText>
+
+
+@if (!gameStart)
+{
+    <MudGrid Justify="Justify.Center">
+        <MudItem><MudText Style="margin: 20px" Typo="Typo.subtitle1">@_solitaireGame.Description</MudText></MudItem>
+        <MudItem xs="12"><MudDivider DividerType="DividerType.Middle" /></MudItem>
+        <MudItem>
+            <MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary" Style="margin: 20px" OnClick="StartGame">Start Game</MudButton>
+        </MudItem>
+    </MudGrid>
+}
+else
+{
+    @*<div class="solitaire-board">
+        <MudDropContainer T="Card" Items="_solitaireGame._deck.Cards">
+            <ChildContent>
+                <MudGrid>
+                    <MudItem>
+                        <MudDropZone T="Card" Identifier="SpadeFoundation" />
+                    </MudItem>
+                    <MudItem>
+                        <MudDropZone T="Card" Identifier="HeartFoundation" />
+                    </MudItem>
+                    <MudItem>
+                        <MudDropZone T="Card" Identifier="ClubFoundation" />
+                    </MudItem>
+                    <MudItem>
+                        <MudDropZone T="Card" Identifier="DiamondFoundation" />
+                    </MudItem>
+                    <MudItem>
+                        <MudDropZone T="Card" Identifier="DrawPile" />
+                    </MudItem>
+                    <MudItem xs="12" />
+                    <MudItem>
+                        <MudDropZone T="Card" Identifier="Stack1" />
+                    </MudItem>
+                    <MudItem>
+                        <MudDropZone T="Card" Identifier="Stack2" />
+                    </MudItem>
+                    <MudItem>
+                        <MudDropZone T="Card" Identifier="Stack3" />
+                    </MudItem>
+                    <MudItem>
+                        <MudDropZone T="Card" Identifier="Stack4" />
+                    </MudItem>
+                    <MudItem>
+                        <MudDropZone T="Card" Identifier="Stack5" />
+                    </MudItem>
+                    <MudItem>
+                        <MudDropZone T="Card" Identifier="Stack6" />
+                    </MudItem>
+                    <MudItem>
+                        <MudDropZone T="Card" Identifier="Stack7" />
+                    </MudItem>
+                </MudGrid>
+            </ChildContent>
+            <ItemRenderer>
+                <CardComponent _card="@context.Card"/>
+            </ItemRenderer>
+        </MudDropContainer>
+    </div>*@
+
+    
+}
+
+@code {
+    private Solitaire _solitaireGame = new Solitaire();
+
+    private bool gameStart;
+
+    public void StartGame()
+    {
+        gameStart = true;
+        //_solitaireGame.StartGame();
+    }
+}

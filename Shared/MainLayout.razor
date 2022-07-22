@@ -1,0 +1,66 @@
+﻿@inherits LayoutComponentBase
+@implements IDisposable
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+<MudLayout>
+    <NavMenu @bind-OpenState="_openState" />
+    <MudAppBar Color="Color.Primary" Fixed="false" Dense="true">
+        <MudIconButton OnClick="ToggleNavMenu" Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" />
+        <MudSpacer />
+        <MudText Typo="Typo.subtitle1">@pageName</MudText>
+    </MudAppBar>
+    <MudMainContent>
+        @Body
+    </MudMainContent>
+</MudLayout>
+
+@code {
+    private bool _openState { get; set; }
+
+    public void ToggleNavMenu()
+    {
+        _openState = !_openState;
+    }
+
+    public string pageName { get; set; }
+
+    [Inject]
+    private NavigationManager _navigation { get; set; }
+
+    protected override void OnInitialized()
+    {
+        _navigation.LocationChanged += HandleLocationChanged;
+
+        string currentUri = _navigation.Uri;
+        GetPageNameFromUri(currentUri);
+    }
+
+    private void HandleLocationChanged(object? sender, LocationChangedEventArgs e)
+    {
+        string currentUri = e.Location;
+        GetPageNameFromUri(currentUri);
+    }
+
+    public void GetPageNameFromUri(string uri)
+    {
+        // Might replace this with a regex expression cause it won't always be https://localhost:7274/
+        string formattedUri = uri.Replace("https://localhost:7274/", "");
+        if (formattedUri == "")
+        {
+            pageName = "Home";
+        }
+        else
+        {
+            pageName = char.ToUpper(formattedUri[0]) + formattedUri.Substring(1);
+        }
+        StateHasChanged();
+    }
+
+    public void Dispose()
+    {
+        _navigation.LocationChanged -= HandleLocationChanged;
+    }
+}

@@ -1,0 +1,32 @@
+﻿@using Microsoft.AspNetCore.Components.Routing
+
+<MudDrawer Open="@OpenState" OpenChanged="OpenStateChanged"  Anchor="Anchor.Start" Elevation="2" Variant="@DrawerVariant.Temporary">
+    <MudDrawerHeader>
+        <MudText Typo="Typo.h5">Games</MudText>
+    </MudDrawerHeader>
+    <MudDivider />
+    <MudNavMenu>
+            <MudNavLink Href="" Match="NavLinkMatch.All">Home</MudNavLink>
+            @foreach (IGame game in games)
+            {
+                <MudNavLink Href="@game.Route">@game.Name</MudNavLink>
+            }
+            <MudNavLink Href="/deck">Deck</MudNavLink>
+    </MudNavMenu>
+</MudDrawer>
+
+@code {
+    [Parameter]
+    public bool OpenState { get; set; } = true;
+
+    [Parameter]
+    public EventCallback<bool> OpenStateChanged { get; set; }
+
+    List<IGame> games = new List<IGame>();
+
+    protected override void OnInitialized()
+    {
+        games.Add(new Blackjack());
+        games.Add(new Solitaire());
+    }
+}
