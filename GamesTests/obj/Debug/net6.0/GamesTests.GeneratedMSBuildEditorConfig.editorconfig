@@ -1,0 +1,20 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = GamesTests
+build_property.RootNamespace = GamesTests
+build_property.ProjectDir = C:\Users\EthanHair\source\repos\Games\GamesTests\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\EthanHair\source\repos\Games\GamesTests
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/EthanHair/source/repos/Games/GamesTests/BlackjackPage.razor]
+build_metadata.AdditionalFiles.TargetPath = QmxhY2tqYWNrUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
