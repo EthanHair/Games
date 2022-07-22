@@ -1,6 +1,6 @@
 using Games.Classes.GameClasses;
 
-namespace GamesTests
+namespace GamesTests.GamesTests
 {
     public class SolitaireTests
     {

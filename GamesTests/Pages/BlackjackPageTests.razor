@@ -1,0 +1,16 @@
+﻿@using Games.Pages
+@inherits TestContext
+
+@code{
+    [Fact]
+	public void When_GameOver_Event_Is_Raised_GameOverEventHandler_Is_Called_And_Changes_Things_Appropriately()
+	{
+		// Arrange
+		var cut = Render(@<BlackJackPage />);
+		// Act
+		
+		// Assert
+		//cut.Find(".park-name").MarkupMatches(@<span class:ignore><MudSkeleton /></span>);
+		Assert.True(false);
+	}
+}

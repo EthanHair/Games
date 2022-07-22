@@ -15,6 +15,6 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\EthanHair\source\repos\Games\GamesTests
 build_property._RazorSourceGeneratorDebug = 
 
-[C:/Users/EthanHair/source/repos/Games/GamesTests/BlackjackPage.razor]
-build_metadata.AdditionalFiles.TargetPath = QmxhY2tqYWNrUGFnZS5yYXpvcg==
+[C:/Users/EthanHair/source/repos/Games/GamesTests/Pages/BlackjackPageTests.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmxhY2tqYWNrUGFnZVRlc3RzLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

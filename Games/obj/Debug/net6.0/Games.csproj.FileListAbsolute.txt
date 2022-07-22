@@ -819,10 +819,13 @@ C:\Users\EthanHair\source\repos\Games\obj\Debug\net6.0\Games.dll
 C:\Users\EthanHair\source\repos\Games\obj\Debug\net6.0\refint\Games.dll
 C:\Users\EthanHair\source\repos\Games\obj\Debug\net6.0\Games.pdb
 C:\Users\EthanHair\source\repos\Games\obj\Debug\net6.0\ref\Games.dll
+C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\blazor.boot.json
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\blazor.webassembly.js
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\dotnet.6.0.6.0ophd2fr3l.js
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\dotnet.timezones.blat
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\dotnet.wasm
+C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\Games.dll
+C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\Games.pdb
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\icudt.dat
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\icudt_CJK.dat
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\icudt_EFIGS.dat
@@ -1138,6 +1141,7 @@ C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.ComponentModel.TypeConverter.dll.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.Runtime.Handles.dll.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.Threading.Thread.dll.gz
+C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\Games.pdb.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.ComponentModel.dll.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.Configuration.dll.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.Diagnostics.DiagnosticSource.dll.gz
@@ -1206,6 +1210,7 @@ C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.Runtime.CompilerServices.VisualC.dll.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.Net.WebClient.dll.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\Microsoft.VisualBasic.Core.dll.gz
+C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\Games.dll.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.Security.SecureString.dll.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.Reflection.Primitives.dll.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.Diagnostics.StackTrace.dll.gz
@@ -1215,11 +1220,6 @@ C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\blazor.webassembly.js.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.Security.Cryptography.Encoding.dll.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\System.Net.dll.gz
-C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\blazor.boot.json
-C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\Games.dll
-C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\Games.pdb
-C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\Games.pdb.gz
-C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\wwwroot\_framework\Games.dll.gz
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\Games.staticwebassets.runtime.json
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\Games.dll
 C:\Users\EthanHair\source\repos\Games\Games\bin\Debug\net6.0\Games.pdb

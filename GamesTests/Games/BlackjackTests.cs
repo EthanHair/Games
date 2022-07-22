@@ -2,7 +2,7 @@
 using Games.Classes.GameClasses;
 using static Games.Classes.GameClasses.Blackjack;
 
-namespace GamesTests
+namespace GamesTests.GamesTests
 {
     public class BlackjackTests
     {
