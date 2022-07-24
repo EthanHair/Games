@@ -2,15 +2,41 @@
 @inherits TestContext
 
 @code{
-    [Fact]
-	public void When_GameOver_Event_Is_Raised_GameOverEventHandler_Is_Called_And_Changes_Things_Appropriately()
+	[Fact]
+	public void On_StartGame_StartGameBool_Is_True_And_Shows_The_Board()
 	{
 		// Arrange
-		var cut = Render(@<BlackJackPage />);
+		var cut = RenderComponent<BlackjackPage>();
 		// Act
-		
+		cut.Instance.StartGame();
 		// Assert
-		//cut.Find(".park-name").MarkupMatches(@<span class:ignore><MudSkeleton /></span>);
-		Assert.True(false);
+		Assert.True(cut.Instance.gameStart);
+		Assert.NotNull(cut.Find("blackjack-board"));
+	}
+
+	[Fact]
+	public void When_GameOver_Event_Is_Raised_With_PlayerWin_GameOverEventHandler_Is_Called_And_Changes_Things_Appropriately()
+	{
+		// Arrange
+		var cut = RenderComponent<BlackjackPage>();
+		// Act
+		cut.Instance._blackjackGame.GameOver("Player");
+		// Assert
+		Assert.True(cut.Instance.gameOver);
+		Assert.Equal("Player", cut.Instance.winner);
+		cut.Find("mud-typography mud-typography-subtitle1").MarkupMatches(@<h6 class:ignore>Dealer Won</h6>);
+	}
+
+	[Fact]
+	public void When_GameOver_Event_Is_Raised_With_DealerWin_GameOverEventHandler_Is_Called_And_Changes_Things_Appropriately()
+	{
+		// Arrange
+		var cut = RenderComponent<BlackjackPage>();
+		// Act
+		cut.Instance._blackjackGame.GameOver("Dealer");
+		// Assert
+		Assert.True(cut.Instance.gameOver);
+		Assert.Equal("Dealer", cut.Instance.winner);
+		cut.Find("mud-typography mud-typography-subtitle1").MarkupMatches(@<h6 class:ignore>Player Won</h6>);
 	}
 }

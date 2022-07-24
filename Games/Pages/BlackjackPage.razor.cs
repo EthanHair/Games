@@ -20,14 +20,14 @@ namespace Games.Pages
 
         public void UpdateUIEventHandler(object sender, GameEventArgs e)
         {
-            StateHasChanged();
+            InvokeAsync(() => StateHasChanged());
         }
 
         public void GameOverEventHandler(object sender, GameEventArgs e)
         {
             gameOver = true;
             winner = e.Text;
-            StateHasChanged();
+            InvokeAsync(() => StateHasChanged());
         }
 
         public void StartGame()
@@ -44,7 +44,7 @@ namespace Games.Pages
         public async Task PlayerStay()
         {
             _processing = true;
-            StateHasChanged();
+            InvokeAsync(() => StateHasChanged());
             await _blackjackGame.PlayerStay();
         }
 
