@@ -12,7 +12,7 @@
         <MudItem><MudText Style="margin: 20px" Typo="Typo.subtitle1">@_blackjackGame.Description</MudText></MudItem>
         <MudItem xs="12"><MudDivider DividerType="DividerType.Middle" /></MudItem>
         <MudItem>
-            <MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary" Style="margin: 20px" OnClick="StartGame">Start Game</MudButton>
+            <MudButton Class="start-button" Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary" Style="margin: 20px" OnClick="StartGame">Start Game</MudButton>
         </MudItem>
     </MudGrid>
 }
@@ -80,12 +80,12 @@ else
                         <MudItem><MudChip Color="Color.Dark">Score: @_blackjackGame.GetPlayerHandScore()</MudChip></MudItem>
                         <MudItem xs="12"><MudSpacer /></MudItem>
                         <MudItem>
-                            <MudButton Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary" Style="margin: 10px" OnClick="PlayerHit">Hit</MudButton>
+                            <MudButton Class="hit-button" Variant="Variant.Filled" Size="Size.Small" Color="Color.Primary" Style="margin: 10px" OnClick="PlayerHit">Hit</MudButton>
                         </MudItem>
                         <MudItem>
                             @if (!_processing)
                             {
-                                <MudButton OnClick="PlayerStay" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" Style="margin: 10px">
+                                <MudButton Class="stay-button" OnClick="PlayerStay" Variant="Variant.Filled" Color="Color.Primary" Size="Size.Small" Style="margin: 10px">
                                     Stay
                                 </MudButton>
                             }

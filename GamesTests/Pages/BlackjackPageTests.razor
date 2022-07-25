@@ -1,4 +1,5 @@
-﻿@using Games.Pages
+﻿@using Games.Classes
+@using Games.Pages
 @inherits TestContext
 
 @code{
@@ -11,7 +12,7 @@
 		cut.Instance.StartGame();
 		// Assert
 		Assert.True(cut.Instance.gameStart);
-		Assert.NotNull(cut.Find("blackjack-board"));
+		Assert.NotNull(cut.Find(".blackjack-board"));
 	}
 
 	[Fact]
@@ -20,11 +21,12 @@
 		// Arrange
 		var cut = RenderComponent<BlackjackPage>();
 		// Act
+		cut.Instance.StartGame();
 		cut.Instance._blackjackGame.GameOver("Player");
 		// Assert
 		Assert.True(cut.Instance.gameOver);
 		Assert.Equal("Player", cut.Instance.winner);
-		cut.Find("mud-typography mud-typography-subtitle1").MarkupMatches(@<h6 class:ignore>Dealer Won</h6>);
+		cut.Find(".mud-typography.mud-typography-subtitle1").MarkupMatches(@<h6 class:ignore>Player Won</h6>);
 	}
 
 	[Fact]
@@ -33,10 +35,85 @@
 		// Arrange
 		var cut = RenderComponent<BlackjackPage>();
 		// Act
+		cut.Instance.StartGame();
 		cut.Instance._blackjackGame.GameOver("Dealer");
 		// Assert
 		Assert.True(cut.Instance.gameOver);
 		Assert.Equal("Dealer", cut.Instance.winner);
-		cut.Find("mud-typography mud-typography-subtitle1").MarkupMatches(@<h6 class:ignore>Player Won</h6>);
+		cut.Find(".mud-typography.mud-typography-subtitle1").MarkupMatches(@<h6 class:ignore>Dealer Won</h6>);
+	}
+
+	[Fact]
+	public void After_Game_Start_And_A_Hit_Resulting_In_Win_Shows_GameOver_Screen()
+	{
+		// Arrange
+		var cut = RenderComponent<BlackjackPage>();
+		// Act
+		cut.Instance.gameStart = true;
+		cut.Instance._blackjackGame.PlayerHand.Add(new Card("King", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Add(new Card("Queen", "Spades"));
+		cut.Instance.PlayerHit();
+		// Assert
+		Assert.True(cut.Instance.gameOver);
+		Assert.Equal("Player", cut.Instance.winner);
+		cut.Find(".mud-typography.mud-typography-subtitle1").MarkupMatches(@<h6 class:ignore>Player Won</h6>);
+	}
+
+	[Fact]
+	public void After_Game_Start_And_A_Hit_Resulting_In_Bust_Shows_GameOver_Screen()
+	{
+		// Arrange
+		var cut = RenderComponent<BlackjackPage>();
+		// Act
+		cut.Instance.gameStart = true;
+		cut.Instance._blackjackGame.PlayerHand.Add(new Card("King", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Add(new Card("Queen", "Spades"));
+		for (int i = 0; i < 4; i++)
+		{
+			cut.Instance._blackjackGame._deck.DrawCard();
+		}
+			// Now the next card is more than 1
+		cut.Instance.PlayerHit();
+		// Assert
+		Assert.True(cut.Instance.gameOver);
+		Assert.Equal("Dealer", cut.Instance.winner);
+		cut.Find(".mud-typography.mud-typography-subtitle1").MarkupMatches(@<h6 class:ignore>Dealer Won</h6>);
+	}
+
+	[Fact]
+	public async Task When_Dealer_Under_And_Player_Has_Lower_Score_On_PlayerStay_Shows_GameOver_Screen()
+	{
+		// Arrange
+		var cut = RenderComponent<BlackjackPage>();
+		// Act
+		cut.Instance.gameStart = true;
+		cut.Instance._blackjackGame.DealerHand.Add(new Card("King", "Spades"));
+		cut.Instance._blackjackGame.DealerHand.Add(new Card("Queen", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Add(new Card("King", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Add(new Card("6", "Spades"));
+		await cut.Instance.PlayerStay();
+		// Assert
+		Assert.True(cut.Instance.gameOver);
+		Assert.Equal("Dealer", cut.Instance.winner);
+		cut.Find(".mud-typography.mud-typography-subtitle1").MarkupMatches(@<h6 class:ignore>Dealer Won</h6>);
+	}
+
+	[Fact]
+	public async Task When_Dealer_Under_And_Player_Has_Lower_Score_On_PlayerHit_Then_PlayerStay_Shows_GameOver_Screen()
+	{
+		// Arrange
+		var cut = RenderComponent<BlackjackPage>();
+		// Act
+		cut.Instance.gameStart = true;
+		cut.Instance._blackjackGame.DealerHand.Add(new Card("King", "Spades"));
+		cut.Instance._blackjackGame.DealerHand.Add(new Card("Queen", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Add(new Card("King", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Add(new Card("6", "Spades"));
+		cut.Instance.PlayerHit();
+		await cut.Instance.PlayerStay();
+		// Assert
+		Assert.True(cut.Instance.gameOver);
+		Assert.Equal("Dealer", cut.Instance.winner);
+		cut.Find(".mud-typography.mud-typography-subtitle1").MarkupMatches(@<h6 class:ignore>Dealer Won</h6>);
 	}
 }
