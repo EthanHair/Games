@@ -9,7 +9,7 @@ namespace Games.Pages
 
         public bool gameOver = false;
         public bool gameStart = false;
-        public bool _processing = false;
+        public bool playerStay = false;
         public string winner { get; set; } = "No One";
 
         protected override void OnInitialized()
@@ -36,24 +36,25 @@ namespace Games.Pages
             _blackjackGame.StartGame();
         }
 
-        public void PlayerHit()
+        public async Task PlayerHit()
         {
-            _blackjackGame.PlayerHit();
+            await _blackjackGame.PlayerHit();
         }
 
         public async Task PlayerStay()
         {
-            _processing = true;
+            playerStay = true;
             InvokeAsync(() => StateHasChanged());
             await _blackjackGame.PlayerStay();
+            await InvokeAsync(() => StateHasChanged());
         }
 
         public void Reset()
         {
             gameStart = false;
             gameOver = false;
+            playerStay = false;
             winner = "No One";
-            _processing = false;
             _blackjackGame = new Blackjack();
         }
 

@@ -113,47 +113,20 @@ namespace Games.Classes.GameClasses
         public bool playerStayed = false;
 
         // Playing Game Methods
-        public void CheckGame()
+        public async Task CheckGame()
         {
-            var dealerResult = CheckDealerScore();
             var playerResult = CheckPlayerScore();
-            bool dealerWin = false;
-            bool playerWin = false;
 
-            // Added this if under then compare scores stuff
-            if (dealerResult == ScoreState.Under && playerResult == ScoreState.Under && playerStayed)
+            if (playerResult == ScoreState.Bust)
             {
-                if (GetDealerHandScore() < GetPlayerHandScore())
-                {
-                    GameOver("Player");
-                }
-                else
-                {
-                    GameOver("Dealer");
-                }
+                GameOver("Dealer Won");
             }
-
-            if (playerResult == ScoreState.Bust ||
-                dealerResult == ScoreState.Win ||
-                (playerResult == ScoreState.Bust && playerResult == ScoreState.Bust))
+            else if (playerResult == ScoreState.Win)
             {
-                dealerWin = true;
+                await PlayerStay();
+                GameOver("Player Won");
             }
-            else if (playerResult == ScoreState.Win ||
-                (dealerResult == ScoreState.Bust && playerResult == ScoreState.Under))
-            {
-                playerWin = true;
-            }
-
-            if (dealerWin)
-            {
-                GameOver("Dealer");
-            }
-            else if (playerWin)
-            {
-                GameOver("Player");
-            }
-            else
+            else if (playerResult == ScoreState.Under)
             {
                 UpdateUI();
             }
@@ -182,18 +155,16 @@ namespace Games.Classes.GameClasses
             DealCard("Dealer");
             DealCard("Player");
             DealCard("Dealer");
+            if (CheckPlayerScore() == ScoreState.Win)
+            {
+                GameOver("Player Win");
+            }
         }
 
-        public void PlayerHit()
+        public async Task PlayerHit()
         {
             DealCard("Player");
-            CheckGame();
-
-            if (CheckDealerScore() == ScoreState.DealerHitAgain && CheckPlayerScore() != ScoreState.Bust)
-            {
-                DealCard("Dealer");
-            }
-            CheckGame();
+            await CheckGame();
         }
 
         public async Task PlayerStay()
@@ -202,15 +173,19 @@ namespace Games.Classes.GameClasses
             await MakeDealerFinish();
             if (CheckDealerScore() == ScoreState.Bust)
             {
-                GameOver("Player");
+                GameOver("Player Won");
             }
             else if (GetDealerHandScore() < GetPlayerHandScore())
             {
-                GameOver("Player");
+                GameOver("Player Won");
+            }
+            else if (GetDealerHandScore() > GetPlayerHandScore())
+            {
+                GameOver("Dealer Won");
             }
             else
             {
-                GameOver("Dealer");
+                GameOver("Push");
             }
         }
 
@@ -219,6 +194,8 @@ namespace Games.Classes.GameClasses
             while (CheckDealerScore() == ScoreState.DealerHitAgain)
             {
                 DealCard("Dealer");
+                Thread.Sleep(1500);
+                UpdateUI();
             }
             return Task.CompletedTask;
         }

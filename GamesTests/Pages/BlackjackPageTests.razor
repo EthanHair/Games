@@ -4,15 +4,18 @@
 
 @code{
 	[Fact]
-	public void On_StartGame_StartGameBool_Is_True_And_Shows_The_Board()
+	public void On_StartGame_StartGameBool_Is_True_And_Shows_The_Board_Grid()
 	{
 		// Arrange
 		var cut = RenderComponent<BlackjackPage>();
 		// Act
 		cut.Instance.StartGame();
+		//var board = cut.Find(".blackjack-board");
+		var grid = cut.Find(".mud-grid.mud-grid-spacing-xs-3.justify-center");
 		// Assert
 		Assert.True(cut.Instance.gameStart);
-		Assert.NotNull(cut.Find(".blackjack-board"));
+		//Assert.NotNull(board);
+		Assert.NotNull(grid);
 	}
 
 	[Fact]
