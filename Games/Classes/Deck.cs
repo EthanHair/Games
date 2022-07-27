@@ -9,6 +9,8 @@ namespace Games.Classes
         private static Random rng = new Random();
         public List<Card> Cards { get; set; } = new List<Card>();
 
+        public List<Card> DrawnCards { get; set;} = new List<Card>();
+
         public static Card CardBack = new Card("back", "card");
 
         public Deck()
@@ -33,12 +35,28 @@ namespace Games.Classes
             {
                 var drawnCard = Cards[0];
                 Cards.Remove(drawnCard);
+                DrawnCards.Add(drawnCard);
                 return drawnCard;
             }
             else
             {
                 // Maybe create a custom exception and then need to wrap every draw call in a catch block and handle if its empty
                 return Deck.CardBack;
+            }
+        }
+
+        public void RecollectCards()
+        {
+            foreach (Card card in DrawnCards)
+            {
+                Cards.Add(card);
+            }
+
+            DrawnCards.Clear();
+
+            for (int i = 0; i < 5; i++)
+            {
+                Shuffle();
             }
         }
     }

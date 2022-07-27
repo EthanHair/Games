@@ -6,6 +6,6 @@
 
         public Dictionary<string, int> RankValueDict { get; }
 
-        public Deck _deck { get; }
+        public Deck _deck { get; set; }
     }
 }

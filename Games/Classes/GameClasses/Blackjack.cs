@@ -48,21 +48,16 @@ namespace Games.Classes.GameClasses
                                                                                                 {"2", 2 },
                                                                                                 {"Ace", 1 } };
 
-        public Deck _deck { get; } = new Deck();
+        public Deck _deck { get; set; } = new Deck();
 
+        public bool playerStayed = false;
+
+        // Dealer
         public List<Card> DealerHand = new List<Card>();
-        public int GetDealerHandScore()
-        {
-            int score = 0;
-            foreach (Card card in DealerHand)
-            {
-                score += RankValueDict[card.Rank];
-            }
-            return score;
-        }
+
         public ScoreState CheckDealerScore()
         {
-            int dealerScore = GetDealerHandScore();
+            int dealerScore = GetScore("Dealer");
             if (dealerScore > 21)
             {
                 return ScoreState.Bust;
@@ -81,21 +76,12 @@ namespace Games.Classes.GameClasses
             }
         }
 
+        // Player
         public List<Card> PlayerHand = new List<Card>();
-
-        public int GetPlayerHandScore()
-        {
-            int score = 0;
-            foreach (Card card in PlayerHand)
-            {
-                score += RankValueDict[card.Rank];
-            }
-            return score;
-        }
 
         public ScoreState CheckPlayerScore()
         {
-            int playerScore = GetPlayerHandScore();
+            int playerScore = GetScore("Player");
             if (playerScore > 21)
             {
                 return ScoreState.Bust;
@@ -110,7 +96,38 @@ namespace Games.Classes.GameClasses
             }
         }
 
-        public bool playerStayed = false;
+        public Dictionary<string, List<Card>> HandDict { get; set; }
+
+        // Contructor
+        public Blackjack()
+        {
+            HandDict = new Dictionary<string, List<Card>>() { { "Player", PlayerHand }, { "Dealer", DealerHand } };
+        }
+
+        public int GetScore(string player)
+        {
+            var scoreList = new List<int>();
+            foreach (Card card in HandDict[player])
+            {
+                scoreList.Add(RankValueDict[card.Rank]);
+            }
+
+            if (scoreList.Contains(1))
+            {
+                if (scoreList.Sum() + 10 > 21)
+                {
+                    return scoreList.Sum();
+                }
+                else
+                {
+                    return scoreList.Sum() + 10;
+                }
+            }
+            else
+            {
+                return scoreList.Sum();
+            }
+        }
 
         // Playing Game Methods
         public async Task CheckGame()
@@ -134,15 +151,7 @@ namespace Games.Classes.GameClasses
 
         public void DealCard(string dealee)
         {
-            if (dealee == "Dealer")
-            {
-                DealerHand.Add(_deck.DrawCard());
-            }
-            if (dealee == "Player")
-            {
-                PlayerHand.Add(_deck.DrawCard());
-            }
-            UpdateUI();
+            HandDict[dealee].Add(_deck.DrawCard());
         }
 
         public void StartGame()
@@ -151,10 +160,14 @@ namespace Games.Classes.GameClasses
             {
                 _deck.Shuffle();
             }
-            DealCard("Player");
-            DealCard("Dealer");
-            DealCard("Player");
-            DealCard("Dealer");
+
+            for (int i = 0; i < 2; i++)
+            {
+                foreach (string player in HandDict.Keys)
+                {
+                    DealCard(player);
+                }
+            }
             if (CheckPlayerScore() == ScoreState.Win)
             {
                 GameOver("Player Win");
@@ -171,15 +184,15 @@ namespace Games.Classes.GameClasses
         {
             playerStayed = true;
             await MakeDealerFinish();
-            if (CheckDealerScore() == ScoreState.Bust)
+
+            var dealerScore = GetScore("Dealer");
+            var playerScore = GetScore("Player");
+
+            if (CheckDealerScore() == ScoreState.Bust || dealerScore < playerScore)
             {
                 GameOver("Player Won");
             }
-            else if (GetDealerHandScore() < GetPlayerHandScore())
-            {
-                GameOver("Player Won");
-            }
-            else if (GetDealerHandScore() > GetPlayerHandScore())
+            else if (dealerScore > playerScore)
             {
                 GameOver("Dealer Won");
             }
@@ -194,10 +207,21 @@ namespace Games.Classes.GameClasses
             while (CheckDealerScore() == ScoreState.DealerHitAgain)
             {
                 DealCard("Dealer");
-                Thread.Sleep(1500);
-                UpdateUI();
             }
             return Task.CompletedTask;
+        }
+
+        public void NewGame()
+        {
+            _deck.RecollectCards();
+            foreach (string player in HandDict.Keys)
+            {
+                if (HandDict[player] is not null)
+                {
+                    HandDict[player].Clear();
+                }
+            }
+            StartGame();
         }
     }
 }

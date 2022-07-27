@@ -39,7 +39,7 @@ namespace GamesTests.GamesTests
             var sut = new Blackjack();
             // Act
             sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+            sut.PlayerHand.Add(new Card("6", "Spades"));
             // Assert
             Assert.Equal(ScoreState.Under, sut.CheckPlayerScore());
         }
@@ -183,10 +183,10 @@ namespace GamesTests.GamesTests
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
-                                                             () => sut.CheckGame());
+                                                             () => sut.PlayerStay());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Player", gameOverEvent.Arguments.Text);
+            Assert.Equal("Player Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -208,7 +208,7 @@ namespace GamesTests.GamesTests
                                                              () => sut.CheckGame());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Player", gameOverEvent.Arguments.Text);
+            Assert.Equal("Player Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -230,7 +230,7 @@ namespace GamesTests.GamesTests
                                                              () => sut.CheckGame());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Dealer", gameOverEvent.Arguments.Text);
+            Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -251,7 +251,7 @@ namespace GamesTests.GamesTests
                                                              () => sut.CheckGame());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Dealer", gameOverEvent.Arguments.Text);
+            Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -272,7 +272,7 @@ namespace GamesTests.GamesTests
                                                              () => sut.CheckGame());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Player", gameOverEvent.Arguments.Text);
+            Assert.Equal("Player Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -291,10 +291,10 @@ namespace GamesTests.GamesTests
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
-                                                             () => sut.CheckGame());
+                                                             () => sut.PlayerStay());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Player", gameOverEvent.Arguments.Text);
+            Assert.Equal("Player Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -313,10 +313,10 @@ namespace GamesTests.GamesTests
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
-                                                             () => sut.CheckGame());
+                                                             () => sut.PlayerStay());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Dealer", gameOverEvent.Arguments.Text);
+            Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -338,7 +338,7 @@ namespace GamesTests.GamesTests
                                                              () => sut.CheckGame());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Dealer", gameOverEvent.Arguments.Text);
+            Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -357,10 +357,10 @@ namespace GamesTests.GamesTests
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
-                                                             () => sut.CheckGame());
+                                                             () => sut.PlayerStay());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Dealer", gameOverEvent.Arguments.Text);
+            Assert.Equal("Push", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -378,10 +378,10 @@ namespace GamesTests.GamesTests
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
-                                                             () => sut.CheckGame());
+                                                             () => sut.PlayerStay());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Dealer", gameOverEvent.Arguments.Text);
+            Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -398,10 +398,10 @@ namespace GamesTests.GamesTests
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
-                                                             () => sut.CheckGame());
+                                                             () => sut.PlayerStay());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Player", gameOverEvent.Arguments.Text);
+            Assert.Equal("Player Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -421,7 +421,7 @@ namespace GamesTests.GamesTests
                                                              () => sut.PlayerStay());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Player", gameOverEvent.Arguments.Text);
+            Assert.Equal("Player Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -441,7 +441,7 @@ namespace GamesTests.GamesTests
                                                              () => sut.PlayerStay());
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Dealer", gameOverEvent.Arguments.Text);
+            Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -464,7 +464,7 @@ namespace GamesTests.GamesTests
             Assert.Equal(2, sut.DealerHand.Count);
             Assert.Equal(4, sut.PlayerHand.Count);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Dealer", gameOverEvent.Arguments.Text);
+            Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -488,7 +488,7 @@ namespace GamesTests.GamesTests
             Assert.Equal(3, sut.DealerHand.Count);
             Assert.Equal(4, sut.PlayerHand.Count);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Dealer", gameOverEvent.Arguments.Text);
+            Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -512,7 +512,7 @@ namespace GamesTests.GamesTests
             Assert.Equal(3, sut.DealerHand.Count);
             Assert.Equal(4, sut.PlayerHand.Count);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Dealer", gameOverEvent.Arguments.Text);
+            Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -535,31 +535,7 @@ namespace GamesTests.GamesTests
             Assert.Equal(2, sut.DealerHand.Count);
             Assert.Equal(4, sut.PlayerHand.Count);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Dealer", gameOverEvent.Arguments.Text);
-        }
-
-        [Fact]
-        public void When_Player_Hits_And_Is_Under_And_Dealer_Has_Higher_Score_PlayerStay_Raises_GameOver_Event_With_Dealer_Win()
-        {
-            // Arrange
-            var sut = new Blackjack();
-            // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("9", "Spades"));
-
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-
-            sut.PlayerHit();
-            // Assert
-            var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
-                                                             h => sut.GameOverEvent -= h,
-                                                             () => sut.PlayerStay());
-            Assert.NotNull(gameOverEvent);
-            Assert.Equal(2, sut.DealerHand.Count);
-            Assert.Equal(2, sut.PlayerHand.Count);
-            Assert.Equal("Ace", sut.PlayerHand[1].Rank);
-            Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Dealer", gameOverEvent.Arguments.Text);
+            Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -570,10 +546,10 @@ namespace GamesTests.GamesTests
             // Act and Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
-                                                             () => sut.GameOver("Player"));
+                                                             () => sut.GameOver("Player Won"));
             Assert.NotNull(gameOverEvent);
             Assert.Equal(sut, gameOverEvent.Sender);
-            Assert.Equal("Player", gameOverEvent.Arguments.Text);
+            Assert.Equal("Player Won", gameOverEvent.Arguments.Text);
         }
 
         [Fact]
@@ -588,6 +564,39 @@ namespace GamesTests.GamesTests
             Assert.NotNull(updateUIEvent);
             Assert.Equal(sut, updateUIEvent.Sender);
             Assert.Equal("Update UI", updateUIEvent.Arguments.Text);
+        }
+
+        [Fact]
+        public void When_GetScore_Should_Count_Ace_As_11_It_Does()
+        {
+            // Arrange
+            var sut = new Blackjack();
+
+            sut.PlayerHand.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+
+            // Act
+            var score = sut.GetScore("Player");
+
+            // Assert
+            Assert.Equal(21, score);
+        }
+
+        [Fact]
+        public void When_GetScore_Should_Count_Ace_As_1_It_Does()
+        {
+            // Arrange
+            var sut = new Blackjack();
+
+            sut.PlayerHand.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Add(new Card("6", "Spades"));
+            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+
+            // Act
+            var score = sut.GetScore("Player");
+
+            // Assert
+            Assert.Equal(17, score);
         }
     }
 }

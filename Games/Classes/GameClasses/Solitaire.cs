@@ -16,7 +16,7 @@ namespace Games.Classes.GameClasses
 
         public Dictionary<string, int> RankValueDict { get; } = new Dictionary<string, int>() { };
 
-        public Deck _deck { get; } = new Deck();
+        public Deck _deck { get; set; } = new Deck();
 
         private Stack<Card> _stack1 = new Stack<Card>();
         private Stack<Card> _stack2 = new Stack<Card>();

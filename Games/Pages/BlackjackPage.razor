@@ -42,7 +42,7 @@ else
                 @if (gameOver)
                 {
                     <MudItem Style="display: flex; flex-direction: column; justify-content: center">
-                            <MudChip Color="Color.Dark">Score: @_blackjackGame.GetDealerHandScore()</MudChip>
+                            <MudChip Color="Color.Dark">Score: @_blackjackGame.GetScore("Dealer")</MudChip>
                     </MudItem>
                 }
             <MudItem xs="12"><MudSpacer /></MudItem>
@@ -67,7 +67,7 @@ else
             </MudItem>
             <MudItem>
                 <MudGrid Justify="Justify.Center">
-                    <MudItem><MudChip Color="Color.Dark">Score: @_blackjackGame.GetPlayerHandScore()</MudChip></MudItem>
+                    <MudItem><MudChip Color="Color.Dark">Score: @_blackjackGame.GetScore("Player")</MudChip></MudItem>
                     <MudItem xs="12"><MudSpacer /></MudItem>
                     @if (!gameOver)
                     {
@@ -91,8 +91,8 @@ else
                         <MudItem Style="margin-top: -32px">
                             <MudButton Variant="Variant.Filled" Size="Size.Large"
                                Color="Color.Primary" Style="margin: 20px"
-                               OnClick="Reset">
-                                Reset
+                               OnClick="NewGame">
+                                New Game
                             </MudButton>
                         </MudItem>
                     }

@@ -8,18 +8,35 @@
 <MudGrid Justify="Justify.Center">
     <MudItem xs="12"><MudDivider DividerType="DividerType.Middle" /></MudItem>
     <MudItem>
-        @foreach (Card card in _deck.Cards)
-        {
-            <CardComponent _card="card" />
-        }
+        <MudGrid Justify="Justify.Center">
+            @foreach (Card card in _deck.Cards)
+            {
+                <MudItem>
+                    <CardComponent _card="card" />
+                </MudItem>
+            }
+        </MudGrid>
     </MudItem>
     <MudItem xs="12"><MudSpacer /></MudItem>
     <MudItem>
         <CardComponent _card="@Deck.CardBack" />
     </MudItem>
     <MudItem>
-        <MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary" Style="margin: 20px" OnClick="Shuffle">Shuffle</MudButton>
-        <MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary" Style="margin: 20px" OnClick="Draw">Draw</MudButton>
+        <MudButton Variant="Variant.Filled" Size="Size.Large"
+                   Color="Color.Primary" Style="margin: 20px" 
+                   OnClick="Shuffle">
+            Shuffle
+        </MudButton>
+        <MudButton Variant="Variant.Filled" Size="Size.Large"
+                   Color="Color.Primary" Style="margin: 20px" 
+                   OnClick="Draw">
+            Draw
+        </MudButton>
+        <MudButton Variant="Variant.Filled" Size="Size.Large"
+                   Color="Color.Primary" Style="margin: 20px" 
+                   OnClick="RecollectCards">
+            Recollect Cards
+        </MudButton>
     </MudItem>
     <MudItem>
         <CardComponent _card="@Deck.CardBack" />
@@ -27,17 +44,19 @@
     <MudItem xs="12"><MudSpacer /></MudItem>
     <MudItem>
         <MudText Align="Align.Center" Typo="Typo.subtitle1">Drawn Cards</MudText>
-        @foreach (Card card in cards)
-        {
-            <CardComponent _card="card" />
-        }
+        <MudGrid Justify="Justify.Center">
+            @foreach (Card card in _deck.DrawnCards)
+            {
+                <MudItem>
+                    <CardComponent _card="card" />
+                </MudItem>
+            }
+        </MudGrid>
     </MudItem>
 </MudGrid>
 
 @code {
     public Deck _deck = new Deck();
-
-    public List<Card> cards = new List<Card>();
 
     public void Shuffle()
     {
@@ -46,7 +65,13 @@
     }
     public void Draw()
     {
-        cards.Add(_deck.DrawCard());
+        _deck.DrawCard();
+        StateHasChanged();
+    }
+
+    public void RecollectCards()
+    {
+        _deck.RecollectCards();
         StateHasChanged();
     }
 }

@@ -49,13 +49,12 @@ namespace Games.Pages
             await InvokeAsync(() => StateHasChanged());
         }
 
-        public void Reset()
+        public void NewGame()
         {
-            gameStart = false;
             gameOver = false;
             playerStay = false;
             winner = "No One";
-            _blackjackGame = new Blackjack();
+            _blackjackGame.NewGame();
         }
 
         public void Dispose()
