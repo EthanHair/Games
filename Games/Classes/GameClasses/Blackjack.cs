@@ -15,6 +15,14 @@ namespace Games.Classes.GameClasses
 
         public void GameOver(string winner)
         {
+            if (winner == "Player Won")
+            {
+                PlayerMoney += 2 * PlayerBet;
+            }
+            else if (winner == "Push")
+            {
+                PlayerMoney += PlayerBet;
+            }
             GameOverEvent?.Invoke(this, new GameEventArgs(winner));
         }
 
@@ -66,7 +74,7 @@ namespace Games.Classes.GameClasses
             {
                 return ScoreState.Win;
             }
-            if (dealerScore < 16)
+            if (dealerScore < 17)
             {
                 return ScoreState.DealerHitAgain;
             }
@@ -78,6 +86,10 @@ namespace Games.Classes.GameClasses
 
         // Player
         public List<Card> PlayerHand = new List<Card>();
+
+        public decimal PlayerMoney { get; set; } = 4.00M;
+
+        public decimal PlayerBet { get; set; } = 0.00M;
 
         public ScoreState CheckPlayerScore()
         {
@@ -180,6 +192,19 @@ namespace Games.Classes.GameClasses
             await CheckGame();
         }
 
+        public async Task PlayerDoubleDown()
+        {
+            PlayerBet = 2 * PlayerBet;
+            await PlayerHit();
+            await PlayerStay();
+        }
+
+        public void MakePlayerBet()
+        {
+            // MudNumericField changes the PlayerBet
+            PlayerMoney -= PlayerBet;
+        }
+
         public async Task PlayerStay()
         {
             playerStayed = true;
@@ -213,6 +238,7 @@ namespace Games.Classes.GameClasses
 
         public void NewGame()
         {
+            PlayerBet = 0.0M;
             _deck.RecollectCards();
             foreach (string player in HandDict.Keys)
             {
@@ -222,6 +248,13 @@ namespace Games.Classes.GameClasses
                 }
             }
             StartGame();
+        }
+
+        public void Reset()
+        {
+            PlayerBet = 0.0M;
+            PlayerMoney = 4.00M;
+            NewGame();
         }
     }
 }

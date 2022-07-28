@@ -12,15 +12,21 @@
         <MudItem><MudText Style="margin: 20px" Typo="Typo.subtitle1">@_blackjackGame.Description</MudText></MudItem>
         <MudItem xs="12"><MudDivider DividerType="DividerType.Middle" /></MudItem>
         <MudItem>
-            <MudButton Class="start-button" Variant="Variant.Filled" Size="Size.Large" Color="Color.Primary" Style="margin: 20px" OnClick="StartGame">Start Game</MudButton>
+            <MudButton Class="start-button" Variant="Variant.Filled" 
+                       Size="Size.Large" Color="Color.Dark" 
+                       Style="margin: 20px" OnClick="StartGame">
+                Start Game
+            </MudButton>
         </MudItem>
     </MudGrid>
 }
 else
 {
     <div class="blackjack-board">
-        <MudGrid Justify="Justify.Center">
-            <MudItem xs="12"><MudSpacer /></MudItem>
+        @if (playerHasBet)
+        {
+            <MudGrid Justify="Justify.Center">
+                <MudItem xs="12"><MudSpacer /></MudItem>
                 @if (!playerStay)
                 {
                     <MudItem Style="padding: 0px">
@@ -34,71 +40,127 @@ else
                 {
                     @foreach (Card card in _blackjackGame.DealerHand)
                     {
-                    <MudItem Style="padding: 0px">
+                        <MudItem Style="padding: 0px">
                             <CardComponent _card="card" />
                         </MudItem>
                     }
                 }
-                @if (gameOver)
+                @if (gameOver && playerStay)
                 {
                     <MudItem Style="display: flex; flex-direction: column; justify-content: center">
-                            <MudChip Color="Color.Dark">Score: @_blackjackGame.GetScore("Dealer")</MudChip>
+                        <MudChip Color="Color.Dark">Score: @_blackjackGame.GetScore("Dealer")</MudChip>
                     </MudItem>
                 }
-            <MudItem xs="12"><MudSpacer /></MudItem>
-            <MudItem>
-                @if (gameOver)
+                <MudItem xs="12"><MudSpacer /></MudItem>
+                @if (!gameOver)
                 {
-                    <MudPaper Elevation="50" Style="background-color: #424242ff; border-radius: 16px">
-                        <MudText Typo="Typo.h5" Style="color: white; padding: 8px">@winner</MudText>
-                    </MudPaper>
+                    <MudItem Style="display: flex; flex-direction: column; justify-content: center;">
+                        <MudChip Color="Color.Dark" Size="Size.Large">@playerBet</MudChip>
+                    </MudItem>
                 }
-                else
-                {
-                    <CardComponent _card="@Deck.CardBack" />
-                }
-            </MudItem>
-            <MudItem xs="12"><MudSpacer /></MudItem>
-            <MudItem>
-                @foreach (Card card in _blackjackGame.PlayerHand)
-                {
-                    <CardComponent _card="card" />
-                }
-            </MudItem>
-            <MudItem>
-                <MudGrid Justify="Justify.Center">
-                    <MudItem><MudChip Color="Color.Dark">Score: @_blackjackGame.GetScore("Player")</MudChip></MudItem>
-                    <MudItem xs="12"><MudSpacer /></MudItem>
-                    @if (!gameOver)
+                <MudItem>
+                    @if (gameOver)
                     {
-                        <MudItem>
-                            <MudButton Class="hit-button" Variant="Variant.Filled"
-                                       Size="Size.Small" Color="Color.Primary"
-                                       Style="margin: 10px" OnClick="PlayerHit">
-                                Hit
-                            </MudButton>
-                        </MudItem>
-                        <MudItem>
-                            <MudButton Class="stay-button" Variant="Variant.Filled"
-                                       Size="Size.Small" Color="Color.Primary"
-                                       Style="margin: 10px" OnClick="PlayerStay">
-                                Stay
-                            </MudButton>
-                        </MudItem>
+                        <MudPaper Elevation="50" Style="background-color: #424242ff; border-radius: 16px">
+                            <MudText Typo="Typo.h5" Align="Align.Center" Style="color: white; padding: 8px">@winner</MudText>
+                            @if (winner == "Player Won")
+                            {
+                                <MudText Typo="Typo.subtitle1" Align="Align.Center" Style="color: white; padding: 8px">
+                                    Won: @playerBet
+                                </MudText>
+                            }
+                            else if (winner == "Dealer Won")
+                            {
+                                <MudText Typo="Typo.subtitle1" Align="Align.Center" Style="color: white; padding: 8px">
+                                    Lost: @playerBet
+                                </MudText>
+                            }
+                            else
+                            {
+                                <MudText Typo="Typo.subtitle1" Align="Align.Center" Style="color: white; padding: 8px">
+                                    Returned: @playerBet
+                                </MudText>
+                            }
+                        </MudPaper>
                     }
                     else
                     {
-                        <MudItem Style="margin-top: -32px">
-                            <MudButton Variant="Variant.Filled" Size="Size.Large"
-                               Color="Color.Primary" Style="margin: 20px"
-                               OnClick="NewGame">
-                                New Game
-                            </MudButton>
-                        </MudItem>
+                        <CardComponent _card="@Deck.CardBack" />
                     }
-                    
-                </MudGrid>
-            </MudItem>
-        </MudGrid>
+                </MudItem>
+                <MudItem Style="display: flex; flex-direction: column; justify-content: center;">
+                    <MudChip Color="Color.Dark" Size="Size.Large">@playerMoney</MudChip>
+                </MudItem>
+                <MudItem xs="12"><MudSpacer /></MudItem>
+                <MudItem>
+                    @foreach (Card card in _blackjackGame.PlayerHand)
+                    {
+                        <CardComponent _card="card" />
+                    }
+                </MudItem>
+                <MudItem>
+                    <MudGrid Justify="Justify.Center">
+                        <MudItem><MudChip Color="Color.Dark">Score: @_blackjackGame.GetScore("Player")</MudChip></MudItem>
+                        <MudItem xs="12"><MudSpacer /></MudItem>
+                        @if (!gameOver)
+                        {
+                            <MudItem>
+                                <MudButtonGroup Color="Color.Dark" Variant="Variant.Filled">
+                                    <MudButton Class="hit-button" OnClick="PlayerHit">
+                                        Hit
+                                    </MudButton>
+                                    <MudButton Class="doubledown-button" OnClick="PlayerDoubleDown">
+                                        Double Down
+                                    </MudButton>
+                                    <MudButton Class="stay-button" OnClick="PlayerStay">
+                                        Stay
+                                    </MudButton>
+                                </MudButtonGroup>
+                            </MudItem>
+                        }
+                        else
+                        {
+                            <MudItem Style="margin-top: -32px">
+                                <MudButton Variant="Variant.Filled" Size="Size.Large"
+                                           Color="Color.Dark" Style="margin: 20px"
+                                           OnClick="NewGame">
+                                    Next Game
+                                </MudButton>
+                            </MudItem>
+                        }
+                    </MudGrid>
+                </MudItem>
+            </MudGrid>
+        }
+        else
+        {
+            <MudGrid Justify="Justify.Center">
+                <MudPaper Elevation="50" Style="background-color: whitesmoke; border-radius: 16px; padding: 16px; box-shadow: 0px 4px 10px -2px rgba(0, 0, 0, 2);">
+                    <MudItem Style="display: flex; flex-direction: column; justify-content: center;">
+                        <MudText Align="Align.Center" Typo="Typo.h6">@playerMoney</MudText>
+                    </MudItem>
+                    <MudItem Style="display: flex; justify-content: center;">
+                        <MudNumericField @bind-Value="_blackjackGame.PlayerBet" Label="Bet"
+                                 Variant="Variant.Text" Min="0.0M" Max="_blackjackGame.PlayerMoney" Step="0.02M" />
+                    </MudItem>
+                    <MudItem Style="display: flex; justify-content: center;">
+                        <MudButton Class="bet-button" Variant="Variant.Filled"
+                           Size="Size.Medium" Color="Color.Dark"
+                           Style="margin: 10px" OnClick="MakePlayerBet">
+                            Bet
+                        </MudButton>
+                    </MudItem>
+                </MudPaper>
+            </MudGrid>
+        }
     </div>
+    <MudGrid Justify="Justify.Center">
+        <MudItem>
+            <MudButton Class="reset-button" Variant="Variant.Filled"
+                   Size="Size.Small" Color="Color.Error"
+                   Style="margin: 10px" OnClick="Reset">
+                Reset
+            </MudButton>
+        </MudItem>
+    </MudGrid>
 }

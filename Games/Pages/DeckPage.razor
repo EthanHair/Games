@@ -21,22 +21,18 @@
     <MudItem>
         <CardComponent _card="@Deck.CardBack" />
     </MudItem>
-    <MudItem>
-        <MudButton Variant="Variant.Filled" Size="Size.Large"
-                   Color="Color.Primary" Style="margin: 20px" 
-                   OnClick="Shuffle">
-            Shuffle
-        </MudButton>
-        <MudButton Variant="Variant.Filled" Size="Size.Large"
-                   Color="Color.Primary" Style="margin: 20px" 
-                   OnClick="Draw">
-            Draw
-        </MudButton>
-        <MudButton Variant="Variant.Filled" Size="Size.Large"
-                   Color="Color.Primary" Style="margin: 20px" 
-                   OnClick="RecollectCards">
-            Recollect Cards
-        </MudButton>
+    <MudItem Style="display: flex; flex-direction: column; justify-content: center;">
+        <MudButtonGroup Variant="Variant.Filled" Size="Size.Large" Color="Color.Dark">
+            <MudButton OnClick="Shuffle">
+                Shuffle
+            </MudButton>
+            <MudButton OnClick="Draw">
+                Draw
+            </MudButton>
+            <MudButton OnClick="RecollectCards">
+                Recollect Cards
+            </MudButton>
+        </MudButtonGroup>
     </MudItem>
     <MudItem>
         <CardComponent _card="@Deck.CardBack" />

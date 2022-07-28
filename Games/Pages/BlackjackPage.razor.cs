@@ -10,8 +10,12 @@ namespace Games.Pages
         public bool gameOver = false;
         public bool gameStart = false;
         public bool playerStay = false;
+        public bool playerHasBet = false;
         public string winner { get; set; } = "No One";
 
+        public string playerMoney => $"${string.Format("{0:0.00}", _blackjackGame.PlayerMoney)}";
+
+        public string playerBet => $"${string.Format("{0:0.00}", _blackjackGame.PlayerBet)}";
         protected override void OnInitialized()
         {
             _blackjackGame.UpdateUIEvent += UpdateUIEventHandler;
@@ -44,15 +48,36 @@ namespace Games.Pages
         public async Task PlayerStay()
         {
             playerStay = true;
-            InvokeAsync(() => StateHasChanged());
             await _blackjackGame.PlayerStay();
             await InvokeAsync(() => StateHasChanged());
+        }
+
+        public async Task PlayerDoubleDown()
+        {
+            playerStay = true;
+            await _blackjackGame.PlayerDoubleDown();
+        }
+
+        public void MakePlayerBet()
+        {
+            playerHasBet = true;
+            _blackjackGame.MakePlayerBet();
+        }
+
+        public void Reset()
+        {
+            gameOver = false;
+            playerStay = false;
+            playerHasBet = false;
+            winner = "No One";
+            _blackjackGame.Reset();
         }
 
         public void NewGame()
         {
             gameOver = false;
             playerStay = false;
+            playerHasBet = false;
             winner = "No One";
             _blackjackGame.NewGame();
         }
