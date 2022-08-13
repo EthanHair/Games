@@ -18,21 +18,21 @@ namespace Games.Classes.GameClasses
 
         public Deck _deck { get; set; } = new Deck();
 
-        private Stack<Card> _stack1 = new Stack<Card>();
-        private Stack<Card> _stack2 = new Stack<Card>();
-        private Stack<Card> _stack3 = new Stack<Card>();
-        private Stack<Card> _stack4 = new Stack<Card>();
-        private Stack<Card> _stack5 = new Stack<Card>();
-        private Stack<Card> _stack6 = new Stack<Card>();
-        private Stack<Card> _stack7 = new Stack<Card>();
-        private Stack<Card> _spadeStack = new Stack<Card>();
-        private Stack<Card> _heartStack = new Stack<Card>();
-        private Stack<Card> _clubStack = new Stack<Card>();
-        private Stack<Card> _diamondStack = new Stack<Card>();
-        private Stack<Card> _drawStack = new Stack<Card>();
-        private Stack<Card> _handStack = new Stack<Card>();
+        private Hand _hand1 = new Hand("hand1");
+        private Hand _hand2 = new Hand("hand2");
+        private Hand _hand3 = new Hand("hand3");
+        private Hand _hand4 = new Hand("hand4");
+        private Hand _hand5 = new Hand("hand5");
+        private Hand _hand6 = new Hand("hand6");
+        private Hand _hand7 = new Hand("hand7");
+        private Hand _spadeHand = new Hand("spadeHand");
+        private Hand _heartHand = new Hand("heartHand");
+        private Hand _clubHand = new Hand("vlubHand");
+        private Hand _diamondHand = new Hand("diamondHand");
+        private Hand _drawHand = new Hand("drawHand");
+        private Hand _handHand = new Hand("handHand");
 
-        public Dictionary<string, Stack<Card>> _stacksDict { get; } = new Dictionary<string, Stack<Card>>();
+        public Dictionary<string, Hand> _handsDict { get; } = new Dictionary<string, Hand>();
 
         public Solitaire()
         {
@@ -41,59 +41,59 @@ namespace Games.Classes.GameClasses
                 _deck.Shuffle();
             }
             // Deal first row
-            _stack1.Push(_deck.DrawCard());
-            _stack2.Push(_deck.DrawCard());
-            _stack3.Push(_deck.DrawCard());
-            _stack4.Push(_deck.DrawCard());
-            _stack5.Push(_deck.DrawCard());
-            _stack6.Push(_deck.DrawCard());
-            _stack7.Push(_deck.DrawCard());
+            _deck.DrawCard(ref _hand1);
+            _deck.DrawCard(ref _hand2);
+            _deck.DrawCard(ref _hand3);
+            _deck.DrawCard(ref _hand4);
+            _deck.DrawCard(ref _hand5);
+            _deck.DrawCard(ref _hand6);
+            _deck.DrawCard(ref _hand7);
             // Deal second row
-            _stack2.Push(_deck.DrawCard());
-            _stack3.Push(_deck.DrawCard());
-            _stack4.Push(_deck.DrawCard());
-            _stack5.Push(_deck.DrawCard());
-            _stack6.Push(_deck.DrawCard());
-            _stack7.Push(_deck.DrawCard());
+            _deck.DrawCard(ref _hand2);
+            _deck.DrawCard(ref _hand3);
+            _deck.DrawCard(ref _hand4);
+            _deck.DrawCard(ref _hand5);
+            _deck.DrawCard(ref _hand6);
+            _deck.DrawCard(ref _hand7);
             // Deal third row
-            _stack3.Push(_deck.DrawCard());
-            _stack4.Push(_deck.DrawCard());
-            _stack5.Push(_deck.DrawCard());
-            _stack6.Push(_deck.DrawCard());
-            _stack7.Push(_deck.DrawCard());
+            _deck.DrawCard(ref _hand3);
+            _deck.DrawCard(ref _hand4);
+            _deck.DrawCard(ref _hand5);
+            _deck.DrawCard(ref _hand6);
+            _deck.DrawCard(ref _hand7);
             // Deal fouth row
-            _stack4.Push(_deck.DrawCard());
-            _stack5.Push(_deck.DrawCard());
-            _stack6.Push(_deck.DrawCard());
-            _stack7.Push(_deck.DrawCard());
+            _deck.DrawCard(ref _hand4);
+            _deck.DrawCard(ref _hand5);
+            _deck.DrawCard(ref _hand6);
+            _deck.DrawCard(ref _hand7);
             // Deal fifth row
-            _stack5.Push(_deck.DrawCard());
-            _stack6.Push(_deck.DrawCard());
-            _stack7.Push(_deck.DrawCard());
+            _deck.DrawCard(ref _hand5);
+            _deck.DrawCard(ref _hand6);
+            _deck.DrawCard(ref _hand7);
             // Deal sixth row
-            _stack6.Push(_deck.DrawCard());
-            _stack7.Push(_deck.DrawCard());
+            _deck.DrawCard(ref _hand6);
+            _deck.DrawCard(ref _hand7);
             // Deal seventh row
-            _stack7.Push(_deck.DrawCard());
+            _deck.DrawCard(ref _hand7);
 
             foreach (Card card in _deck.Cards.Reverse<Card>())
             {
-                _drawStack.Push(card);
+                _drawHand.Cards.Add(card);
             }
 
-            _stacksDict = new Dictionary<string, Stack<Card>> { { "stack1", _stack1 },
-                                                                { "stack2", _stack2 },
-                                                                { "stack3", _stack3 },
-                                                                { "stack4", _stack4 },
-                                                                { "stack5", _stack5 },
-                                                                { "stack6", _stack6 },
-                                                                { "stack7", _stack7 },
-                                                                { "spadeStack", _spadeStack },
-                                                                { "heartStack", _heartStack },
-                                                                { "clubStack", _clubStack },
-                                                                { "diamondStack", _diamondStack },
-                                                                { "drawStack", _drawStack },
-                                                                { "handStack", _handStack }, };
+            _handsDict = new Dictionary<string, Hand> { { "stack1", _hand1 },
+                                                       { "stack2", _hand2 },
+                                                       { "stack3", _hand3 },
+                                                       { "stack4", _hand4 },
+                                                       { "stack5", _hand5 },
+                                                       { "stack6", _hand6 },
+                                                       { "stack7", _hand7 },
+                                                       { "spadeStack", _spadeHand },
+                                                       { "heartStack", _heartHand },
+                                                       { "clubStack", _clubHand },
+                                                       { "diamondStack", _diamondHand },
+                                                       { "drawStack", _drawHand },
+                                                       { "handStack", _handHand }, };
         }
     }
 }

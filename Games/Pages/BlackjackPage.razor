@@ -27,23 +27,11 @@ else
         {
             <MudGrid Justify="Justify.Center">
                 <MudItem xs="12"><MudSpacer /></MudItem>
-                @if (!playerStay)
+                @foreach (Card card in _blackjackGame.DealerHand.Cards)
                 {
                     <MudItem Style="padding: 0px">
-                        <CardComponent _card="@_blackjackGame.DealerHand[1]" />
+                        <CardComponent Card="card" />
                     </MudItem>
-                    <MudItem Style="padding: 0px">
-                        <CardComponent _card="Deck.CardBack" />
-                    </MudItem>
-                }
-                else
-                {
-                    @foreach (Card card in _blackjackGame.DealerHand)
-                    {
-                        <MudItem Style="padding: 0px">
-                            <CardComponent _card="card" />
-                        </MudItem>
-                    }
                 }
                 @if (gameOver && playerStay)
                 {
@@ -85,7 +73,7 @@ else
                     }
                     else
                     {
-                        <CardComponent _card="@Deck.CardBack" />
+                        <CardComponent Card="@Deck.CardBack" />
                     }
                 </MudItem>
                 <MudItem Style="display: flex; flex-direction: column; justify-content: center;">
@@ -93,9 +81,9 @@ else
                 </MudItem>
                 <MudItem xs="12"><MudSpacer /></MudItem>
                 <MudItem>
-                    @foreach (Card card in _blackjackGame.PlayerHand)
+                    @foreach (Card card in _blackjackGame.PlayerHand.Cards)
                     {
-                        <CardComponent _card="card" />
+                        <CardComponent Card="card" />
                     }
                 </MudItem>
                 <MudItem>
@@ -109,9 +97,12 @@ else
                                     <MudButton Class="hit-button" OnClick="PlayerHit">
                                         Hit
                                     </MudButton>
-                                    <MudButton Class="doubledown-button" OnClick="PlayerDoubleDown">
-                                        Double Down
-                                    </MudButton>
+                                    @if (!_blackjackGame.playerHit)
+                                    {
+                                        <MudButton Class="doubledown-button" OnClick="PlayerDoubleDown">
+                                            Double Down
+                                        </MudButton>
+                                    }
                                     <MudButton Class="stay-button" OnClick="PlayerStay">
                                         Stay
                                     </MudButton>
@@ -141,7 +132,7 @@ else
                     </MudItem>
                     <MudItem Style="display: flex; justify-content: center;">
                         <MudNumericField @bind-Value="_blackjackGame.PlayerBet" Label="Bet"
-                                 Variant="Variant.Text" Min="0.0M" Max="_blackjackGame.PlayerMoney" Step="0.02M" />
+                                 Variant="Variant.Text" Min="0.02M" Max="_blackjackGame.PlayerMoney" Step="0.02M" />
                     </MudItem>
                     <MudItem Style="display: flex; justify-content: center;">
                         <MudButton Class="bet-button" Variant="Variant.Filled"

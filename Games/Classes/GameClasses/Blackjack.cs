@@ -1,9 +1,13 @@
 ﻿using Games.Classes;
+using Microsoft.AspNetCore.Components;
+using MudBlazor;
 
 namespace Games.Classes.GameClasses
 {
     public class Blackjack : IGame, ICardGame
     {
+        [Inject]
+        private ISnackbar Snackbar { get; set; }
         // Game Details
         public string Name { get; } = "Blackjack";
         public string Description { get; } = "A casino favorite in which the dealer and player take turns getting cards trying to add up to 21";
@@ -60,8 +64,10 @@ namespace Games.Classes.GameClasses
 
         public bool playerStayed = false;
 
+        public bool playerHit = false;
+
         // Dealer
-        public List<Card> DealerHand = new List<Card>();
+        public Hand DealerHand = new Hand("Dealer");
 
         public ScoreState CheckDealerScore()
         {
@@ -84,8 +90,14 @@ namespace Games.Classes.GameClasses
             }
         }
 
+        public async Task FlipOneDealerCard()
+        {
+            DealerHand.Cards[0].FlipCard();
+            await Task.Delay(500);
+        }
+
         // Player
-        public List<Card> PlayerHand = new List<Card>();
+        public Hand PlayerHand = new Hand("Player");
 
         public decimal PlayerMoney { get; set; } = 4.00M;
 
@@ -108,18 +120,31 @@ namespace Games.Classes.GameClasses
             }
         }
 
-        public Dictionary<string, List<Card>> HandDict { get; set; }
+        public async Task FlipCards(string player)
+        {
+            foreach (Card card in HandDict[player].Cards)
+            {
+                if (!card.IsFlipped)
+                {
+                    card.FlipCard();
+                    UpdateUI();
+                    await Task.Delay(500);
+                }
+            }
+        }
+
+        public Dictionary<string, Hand> HandDict { get; set; }
 
         // Contructor
         public Blackjack()
         {
-            HandDict = new Dictionary<string, List<Card>>() { { "Player", PlayerHand }, { "Dealer", DealerHand } };
+            HandDict = new Dictionary<string, Hand>() { { "Player", PlayerHand }, { "Dealer", DealerHand } };
         }
 
         public int GetScore(string player)
         {
             var scoreList = new List<int>();
-            foreach (Card card in HandDict[player])
+            foreach (Card card in HandDict[player].Cards)
             {
                 scoreList.Add(RankValueDict[card.Rank]);
             }
@@ -163,7 +188,15 @@ namespace Games.Classes.GameClasses
 
         public void DealCard(string dealee)
         {
-            HandDict[dealee].Add(_deck.DrawCard());
+            var hand = HandDict[dealee];
+            try
+            {
+                _deck.DrawCard(ref hand);
+            }
+            catch (InvalidDrawException ex)
+            {
+                Snackbar.Add(ex.Message, Severity.Error);
+            }
         }
 
         public void StartGame()
@@ -180,14 +213,17 @@ namespace Games.Classes.GameClasses
                     DealCard(player);
                 }
             }
+
             if (CheckPlayerScore() == ScoreState.Win)
             {
                 GameOver("Player Win");
             }
+
         }
 
         public async Task PlayerHit()
         {
+            playerHit = true;
             DealCard("Player");
             await CheckGame();
         }
@@ -238,13 +274,15 @@ namespace Games.Classes.GameClasses
 
         public void NewGame()
         {
+            playerStayed = false;
+            playerHit = false;
             PlayerBet = 0.0M;
             _deck.RecollectCards();
             foreach (string player in HandDict.Keys)
             {
                 if (HandDict[player] is not null)
                 {
-                    HandDict[player].Clear();
+                    HandDict[player].Cards.Clear();
                 }
             }
             StartGame();

@@ -34,28 +34,33 @@ namespace Games.Pages
             InvokeAsync(() => StateHasChanged());
         }
 
-        public void StartGame()
+        public async Task StartGame()
         {
             gameStart = true;
             _blackjackGame.StartGame();
+            _blackjackGame.FlipCards("Player");
+            _blackjackGame.FlipOneDealerCard();
         }
 
         public async Task PlayerHit()
         {
             await _blackjackGame.PlayerHit();
+            _blackjackGame.FlipCards("Player");
         }
 
         public async Task PlayerStay()
         {
             playerStay = true;
             await _blackjackGame.PlayerStay();
-            await InvokeAsync(() => StateHasChanged());
+            _blackjackGame.FlipCards("Dealer");
+            StateHasChanged();
         }
 
         public async Task PlayerDoubleDown()
         {
             playerStay = true;
             await _blackjackGame.PlayerDoubleDown();
+            _blackjackGame.FlipCards("Player");
         }
 
         public void MakePlayerBet()
@@ -80,6 +85,8 @@ namespace Games.Pages
             playerHasBet = false;
             winner = "No One";
             _blackjackGame.NewGame();
+            _blackjackGame.FlipCards("Player");
+            _blackjackGame.FlipOneDealerCard();
         }
 
         public void Dispose()

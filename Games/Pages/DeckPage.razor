@@ -12,14 +12,14 @@
             @foreach (Card card in _deck.Cards)
             {
                 <MudItem>
-                    <CardComponent _card="card" />
+                    <CardComponent Card="card" />
                 </MudItem>
             }
         </MudGrid>
     </MudItem>
     <MudItem xs="12"><MudSpacer /></MudItem>
     <MudItem>
-        <CardComponent _card="@Deck.CardBack" />
+        <CardComponent Card="@Deck.CardBack" />
     </MudItem>
     <MudItem Style="display: flex; flex-direction: column; justify-content: center;">
         <MudButtonGroup Variant="Variant.Filled" Size="Size.Large" Color="Color.Dark">
@@ -32,42 +32,82 @@
             <MudButton OnClick="RecollectCards">
                 Recollect Cards
             </MudButton>
+            <MudButton OnClick="FlipDrawnCards">
+                Flip Drawn Cards
+            </MudButton>
         </MudButtonGroup>
     </MudItem>
     <MudItem>
-        <CardComponent _card="@Deck.CardBack" />
+        <CardComponent Card="@Deck.CardBack" />
     </MudItem>
     <MudItem xs="12"><MudSpacer /></MudItem>
     <MudItem>
         <MudText Align="Align.Center" Typo="Typo.subtitle1">Drawn Cards</MudText>
         <MudGrid Justify="Justify.Center">
-            @foreach (Card card in _deck.DrawnCards)
+            @foreach (Card card in DealtCardsHand.Cards)
             {
                 <MudItem>
-                    <CardComponent _card="card" />
+                    <CardComponent Card="card" />
                 </MudItem>
             }
         </MudGrid>
     </MudItem>
+    <MudItem xs="12"><MudSpacer /></MudItem>
+    <MudItem xs="12">
+        <MudDivider DividerType="DividerType.Middle" Style="height: 2px; background-color: #bdbdbd;" />
+    </MudItem>
+    <MudItem xs="12"><MudSpacer /></MudItem>
+    <MudItem>
+        <MudText Align="Align.Center" Typo="Typo.subtitle1">Dealing Cards</MudText>
+    </MudItem>
+    <MudItem xs="12"><MudSpacer /></MudItem>
+    <MudItem>
+        @foreach (Card card in leftHand.Cards)
+        {
+            <div class="left-card">
+                <CardComponent Card="card" />
+            </div>
+        }
+        @if (_deck2.Cards.Count != 0)
+        {
+            <div class="deck">
+                <CardComponent Card="@_deck2.Cards[0]" />
+            </div>
+        }
+        @foreach (Card card in rightHand.Cards)
+        {
+            <div class="right-card">
+                <CardComponent Card="card" />
+            </div>
+        }
+    </MudItem>
+    <MudItem xs="12"><MudSpacer /></MudItem>
+    <MudItem Style="display: flex; flex-direction: column; justify-content: center;">
+        <MudButtonGroup Variant="Variant.Filled" Size="Size.Large" Color="Color.Dark">
+            <MudButton OnClick="DrawLeft">
+                Deal Card To Left
+            </MudButton>
+            <MudButton OnClick="RecollectCards2">
+                Recollect Cards
+            </MudButton>
+            <MudButton OnClick="DrawRight">
+                Deal Card To Right
+            </MudButton>
+        </MudButtonGroup>
+    </MudItem>
+    <MudItem xs="12"><MudSpacer /></MudItem>
+    <MudItem xs="12">
+        <MudDivider DividerType="DividerType.Middle" Style="height: 2px; background-color: #bdbdbd;" />
+    </MudItem>
+    <MudItem xs="12"><MudSpacer /></MudItem>
+    <MudItem>
+        <MudButtonGroup Variant="Variant.Filled" Size="Size.Large" Color="Color.Error">
+            <MudButton OnClick="CauseInvalidDrawException1">
+                Casue Invalid Draw Exception 1
+            </MudButton>
+            <MudButton OnClick="CauseInvalidDrawException2">
+                Casue Invalid Draw Exception 2
+            </MudButton>
+        </MudButtonGroup>
+    </MudItem>
 </MudGrid>
-
-@code {
-    public Deck _deck = new Deck();
-
-    public void Shuffle()
-    {
-        _deck.Shuffle();
-        StateHasChanged();
-    }
-    public void Draw()
-    {
-        _deck.DrawCard();
-        StateHasChanged();
-    }
-
-    public void RecollectCards()
-    {
-        _deck.RecollectCards();
-        StateHasChanged();
-    }
-}

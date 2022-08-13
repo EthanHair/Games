@@ -1,0 +1,44 @@
+﻿@keyframes left-deal {
+    from {
+        left: 50vw;
+    }
+    to {
+        left: 40vw;
+    }
+}
+
+@keyframes right-deal {
+    from {
+        right: 50vw;
+    }
+
+    to {
+        right: 40vw;
+    }
+}
+
+.left-card {
+    position: absolute;
+    bottom: 100px;
+    margin-left: -50px;
+    animation-name: left-deal;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+
+.right-card {
+    position: absolute;
+    bottom: 100px;
+    margin-right: -50px;
+    animation-name: right-deal;
+    animation-duration: 3s;
+    animation-fill-mode: forwards;
+}
+
+.deck {
+    z-index: 5;
+}
+
+.divider {
+
+}

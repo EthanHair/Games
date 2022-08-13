@@ -14,6 +14,13 @@
 
         public string Suit { get; set; }
 
-        public string ImageRoute => "Images/" + Name + ".png";
+        public bool IsFlipped = false;
+
+        public string ImageRoute => (IsFlipped ? "Images/" + Name + ".png" : "Images/backofcard.png");
+
+        public void FlipCard()
+        {
+            IsFlipped = !IsFlipped;
+        }
     }
 }
