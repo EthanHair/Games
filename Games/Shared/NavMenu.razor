@@ -6,12 +6,14 @@
     </MudDrawerHeader>
     <MudDivider />
     <MudNavMenu>
-            <MudNavLink Href="" Match="NavLinkMatch.All">Home</MudNavLink>
-            @foreach (IGame game in games)
-            {
-                <MudNavLink Href="@game.Route">@game.Name</MudNavLink>
-            }
-            <MudNavLink Href="/deck">Deck</MudNavLink>
+        <MudNavLink Href="" Match="NavLinkMatch.All">Home</MudNavLink>
+        @foreach (IGame game in games)
+        {
+            <MudNavLink Href="@game.Route">@game.Name</MudNavLink>
+        }
+        <MudNavLink Href="/deck">Deck</MudNavLink>
+        <MudNavLink Href="/dice">Dice</MudNavLink>
+        <MudNavLink Href="/testingjavascript">Testing JavaScript</MudNavLink>
     </MudNavMenu>
 </MudDrawer>
 

@@ -1,6 +1,12 @@
-﻿<MudImage Elevation="10" Src="@Card.ImageRoute" Class="rounded-sm" Alt="@Card.Name" Height="140" Width="100" Style="margin: 5px" />
+﻿<div id="@Id">
+    <MudImage Elevation="10" Src="@Card.ImageRoute" Class="rounded-sm" Alt="@Card.Name" Height="140" 
+                             Width="100" Style="margin: 5px" />
+</div>
 
 @code {
     [Parameter]
     public Card Card { get; set; }
+
+    [Parameter]
+    public Guid Id { get; set; } = Guid.NewGuid();
 }

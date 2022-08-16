@@ -1,0 +1,56 @@
+﻿@page "/dice"
+
+<PageTitle>Deck</PageTitle>
+
+<MudText Align="Align.Center" Typo="Typo.h5">Dice Testing</MudText>
+
+<MudGrid Justify="Justify.Center">
+    <MudItem xs="12"><MudDivider DividerType="DividerType.Middle" /></MudItem>
+    <MudItem xs="12"><MudSpacer /></MudItem>
+    @if (AskForInput)
+    {
+        <MudItem>
+            <MudCard Elevation="25" Style="display: flex; padding: 16px; flex-direction: column; align-items: center;">
+                <MudSelect T="int" @bind-Value="NumberOfSides" Label="Enter the number of sides" Variant="Variant.Outlined" 
+                           AnchorOrigin="Origin.BottomCenter" Style="margin: 8px;">
+                    @foreach (int i in Die._sides.Keys)
+                    {
+                        <MudSelectItem T="int" Value="i" />
+                    }
+                </MudSelect>
+                <MudNumericField @bind-Value="NumberOfDie" Label="Enter the number of die"
+                                 Variant="Variant.Outlined" Style="margin: 8px;" />
+                <MudNumericField @bind-Value="NumberOfRolls" Label="Enter the number of rolls"
+                                 Variant="Variant.Outlined" Style="margin: 8px;" />
+                <MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Dark" 
+                           OnClick="Submit" Style="margin: 8px;">Roll</MudButton>
+            </MudCard>
+        </MudItem>
+    }
+    else
+    {
+        <MudItem xs="12" Style="display: flex; justify-content: center; gap: 8px">
+            <MudText Typo="Typo.h6">Number of Sides: @NumberOfSides</MudText>
+            <MudText Typo="Typo.h6">Number of Die: @NumberOfDie</MudText>
+            <MudText Typo="Typo.h6">Number of Rolls: @NumberOfRolls</MudText>
+        </MudItem>
+        @foreach (int i in result.Keys)
+        {
+            <MudItem xs="1" Style="display: flex; justify-content: center;">
+                <MudText Typo="Typo.subtitle1">@i: @result[i] (@GetPercent(result[i]))</MudText>
+            </MudItem>
+            <MudItem xs="10" Style="margin-left: 16px; display: flex; align-items: center;">
+                <MudProgressLinear Value="result[i]" Min="0" Max="@MaxValueForProgressBars" 
+                                   Color="Color.Primary" Rounded="true" Size="Size.Large"/>
+            </MudItem>
+        }
+        <MudItem xs="12"><MudSpacer /></MudItem>
+        <MudItem>
+            <MudButton Variant="Variant.Filled"
+                   Size="Size.Large" Color="Color.Error"
+                   Style="margin: 16px" OnClick="Reset">
+                Reset
+            </MudButton>
+        </MudItem>
+    }
+</MudGrid>

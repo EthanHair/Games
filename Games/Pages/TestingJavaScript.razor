@@ -1,0 +1,99 @@
+﻿@page "/testingjavascript"
+@using Games.Components
+@inject IJSRuntime JSRuntime
+
+<MudGrid Justify="Justify.Center">
+    <MudItem xs="6" Style="display: flex; justify-content: center;">
+        <MudGrid Justify="Justify.Center">
+            <MudItem>
+                <MudButtonGroup Variant="Variant.Filled" Size="Size.Large" Color="Color.Dark">
+                    <MudButton OnClick="ShowAlert">
+                        Show Alert
+                    </MudButton>
+                    <MudButton OnClick="PassDotNetObjectToJs">
+                        Log .NET object to browser console
+                    </MudButton>
+                </MudButtonGroup>
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+    <MudItem xs="6" Style="display: flex; justify-content: center;">
+        <MudGrid Justify="Justify.Center">
+            <MudItem xs="12">
+                <MudButtonGroup Variant="Variant.Filled" Size="Size.Large" Color="Color.Dark">
+                    <MudButton OnClick="ShowPrompt">
+                        Show Prompt
+                    </MudButton>
+                    <MudButton OnClick="CreateCard">
+                        Get object from JavaScript
+                    </MudButton>
+                </MudButtonGroup>
+            </MudItem>
+            <MudItem xs="6">
+                <MudText Typo="Typo.subtitle1" Style="margin: 8px">Prompt Result: @promptResult</MudText>
+            </MudItem>
+            <MudItem xs="6">
+                @if (card != null)
+                {
+                    <CardComponent Card="card" />
+                }
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+    <MudItem xs="12"><MudSpacer /></MudItem>
+    <MudItem xs="6" Style="display: flex; justify-content: center;">
+        <MudGrid Justify="Justify.Center">
+            <MudItem xs="12">
+                <MudButtonGroup Variant="Variant.Filled" Size="Size.Large" Color="Color.Dark">
+                    <MudButton OnClick="ToggleHideCard">
+                        Toggle Hide Card
+                    </MudButton>
+                </MudButtonGroup>
+            </MudItem>
+            <MudItem xs="6">
+                <CardComponent Id="cardId" Card="Deck.CardBack" />
+            </MudItem>
+        </MudGrid>
+    </MudItem>
+</MudGrid>
+
+@code{
+    private async Task ShowAlert()
+    {
+        await JSRuntime.InvokeVoidAsync("blazorInterop.showAlert",
+                                        "This was sent by a JS function that was called from a C# method");
+    }
+
+    private async Task PassDotNetObjectToJs()
+    {
+        await JSRuntime.InvokeVoidAsync("blazorInterop.logToConsoleTable",
+                                        new Card("Ace", "Spades"));
+    }
+
+    private string promptResult;
+
+    private async Task ShowPrompt()
+    {
+        var result = await JSRuntime.InvokeAsync<string>("blazorInterop.showPrompt", "What's your name?", promptResult ?? "");
+
+        if (result != null)
+        {
+            promptResult = result;
+        }
+    }
+
+    private Card card;
+
+    private async Task CreateCard()
+    {
+        card = await JSRuntime.InvokeAsync<Card>("blazorInterop.createCard", "Ace", "Spades");
+        card.FlipCard();
+    }
+
+    private Guid cardId = Guid.NewGuid();
+
+    private async Task ToggleHideCard()
+    {
+        await JSRuntime.InvokeVoidAsync("blazorInterop.toggleHideElement", cardId);
+    }
+}
