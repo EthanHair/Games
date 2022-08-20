@@ -14,8 +14,8 @@ namespace GamesTests.GamesTests
             // Act
             sut.StartGame();
             // Assert
-            Assert.Equal(2, sut.PlayerHand.Count);
-            Assert.Equal(2, sut.DealerHand.Count);
+            Assert.Equal(2, sut.PlayerHand.Cards.Count);
+            Assert.Equal(2, sut.DealerHand.Cards.Count);
             Assert.Equal(48, sut._deck.Cards.Count);
         }
 
@@ -25,9 +25,9 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Queen", "Spades"));
-            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Ace", "Spades"));
             // Assert
             Assert.Equal(ScoreState.Win, sut.CheckPlayerScore());
         }
@@ -38,8 +38,8 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("6", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("6", "Spades"));
             // Assert
             Assert.Equal(ScoreState.Under, sut.CheckPlayerScore());
         }
@@ -50,9 +50,9 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Queen", "Spades"));
-            sut.PlayerHand.Add(new Card("Jack", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Jack", "Spades"));
             // Assert
             Assert.Equal(ScoreState.Bust, sut.CheckPlayerScore());
         }
@@ -63,9 +63,9 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Ace", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Ace", "Spades"));
             // Assert
             Assert.Equal(ScoreState.Win, sut.CheckDealerScore());
         }
@@ -76,8 +76,8 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("2", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("2", "Spades"));
             // Assert
             Assert.Equal(ScoreState.DealerHitAgain, sut.CheckDealerScore());
         }
@@ -88,8 +88,8 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("8", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("8", "Spades"));
             // Assert
             Assert.Equal(ScoreState.Under, sut.CheckDealerScore());
         }
@@ -100,9 +100,9 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Jack", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Jack", "Spades"));
             // Assert
             Assert.Equal(ScoreState.Bust, sut.CheckDealerScore());
         }
@@ -113,7 +113,7 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
             for (int i = 0; i < 5; i++)
             {
                 sut._deck.Shuffle();
@@ -130,13 +130,13 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Ace", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Ace", "Spades"));
             var task = sut.MakeDealerFinish();
             // Assert
             Assert.Equal(Task.CompletedTask, task);
-            Assert.Equal(3, sut.DealerHand.Count);
+            Assert.Equal(3, sut.DealerHand.Cards.Count);
         }
 
         [Fact]
@@ -145,13 +145,13 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Jack", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Jack", "Spades"));
             var task = sut.MakeDealerFinish();
             // Assert
             Assert.Equal(Task.CompletedTask, task);
-            Assert.Equal(3, sut.DealerHand.Count);
+            Assert.Equal(3, sut.DealerHand.Cards.Count);
         }
 
         [Fact]
@@ -160,12 +160,12 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("8", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("8", "Spades"));
             var task = sut.MakeDealerFinish();
             // Assert
             Assert.Equal(Task.CompletedTask, task);
-            Assert.Equal(2, sut.DealerHand.Count);
+            Assert.Equal(2, sut.DealerHand.Cards.Count);
         }
 
         [Fact]
@@ -174,12 +174,12 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Jack", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Jack", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("9", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("9", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
@@ -195,13 +195,13 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Jack", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Jack", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Queen", "Spades"));
-            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Ace", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
@@ -217,13 +217,13 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Jack", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Jack", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Queen", "Spades"));
-            sut.PlayerHand.Add(new Card("Jack", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Jack", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
@@ -239,12 +239,12 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("8", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("8", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Queen", "Spades"));
-            sut.PlayerHand.Add(new Card("Jack", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Jack", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
@@ -260,12 +260,12 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("8", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("8", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Queen", "Spades"));
-            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Ace", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
@@ -281,11 +281,11 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("7", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("7", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("9", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("9", "Spades"));
 
             sut.playerStayed = true;
             // Assert
@@ -303,11 +303,11 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("5", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("5", "Spades"));
 
             sut.playerStayed = true;
             // Assert
@@ -325,13 +325,13 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Ace", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Ace", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Queen", "Spades"));
-            sut.PlayerHand.Add(new Card("Jack", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Jack", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
@@ -347,13 +347,13 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Ace", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Ace", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Queen", "Spades"));
-            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Ace", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
@@ -369,12 +369,12 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Ace", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Ace", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("5", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("5", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
@@ -390,9 +390,9 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Jack", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Jack", "Spades"));
 
             sut.PlayerStay();
             // Assert
@@ -410,11 +410,11 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("7", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("7", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("9", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("9", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
@@ -430,11 +430,11 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("9", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("9", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("7", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("7", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
@@ -450,19 +450,19 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("7", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("7", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Queen", "Spades"));
-            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Ace", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
                                                              () => sut.PlayerHit());
             Assert.NotNull(gameOverEvent);
-            Assert.Equal(2, sut.DealerHand.Count);
-            Assert.Equal(4, sut.PlayerHand.Count);
+            Assert.Equal(2, sut.DealerHand.Cards.Count);
+            Assert.Equal(4, sut.PlayerHand.Cards.Count);
             Assert.Equal(sut, gameOverEvent.Sender);
             Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
@@ -473,20 +473,20 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Ace", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Ace", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Queen", "Spades"));
-            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Ace", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
                                                              () => sut.PlayerHit());
             Assert.NotNull(gameOverEvent);
-            Assert.Equal(3, sut.DealerHand.Count);
-            Assert.Equal(4, sut.PlayerHand.Count);
+            Assert.Equal(3, sut.DealerHand.Cards.Count);
+            Assert.Equal(4, sut.PlayerHand.Cards.Count);
             Assert.Equal(sut, gameOverEvent.Sender);
             Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
@@ -497,20 +497,20 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("Queen", "Spades"));
-            sut.DealerHand.Add(new Card("Jack", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("Jack", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Queen", "Spades"));
-            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Ace", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
                                                              () => sut.PlayerHit());
             Assert.NotNull(gameOverEvent);
-            Assert.Equal(3, sut.DealerHand.Count);
-            Assert.Equal(4, sut.PlayerHand.Count);
+            Assert.Equal(3, sut.DealerHand.Cards.Count);
+            Assert.Equal(4, sut.PlayerHand.Cards.Count);
             Assert.Equal(sut, gameOverEvent.Sender);
             Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
@@ -521,19 +521,19 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
             // Act
-            sut.DealerHand.Add(new Card("King", "Spades"));
-            sut.DealerHand.Add(new Card("2", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("King", "Spades"));
+            sut.DealerHand.Cards.Add(new Card("2", "Spades"));
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Queen", "Spades"));
-            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Ace", "Spades"));
             // Assert
             var gameOverEvent = Assert.Raises<GameEventArgs>(h => sut.GameOverEvent += h,
                                                              h => sut.GameOverEvent -= h,
                                                              () => sut.PlayerHit());
             Assert.NotNull(gameOverEvent);
-            Assert.Equal(2, sut.DealerHand.Count);
-            Assert.Equal(4, sut.PlayerHand.Count);
+            Assert.Equal(2, sut.DealerHand.Cards.Count);
+            Assert.Equal(4, sut.PlayerHand.Cards.Count);
             Assert.Equal(sut, gameOverEvent.Sender);
             Assert.Equal("Dealer Won", gameOverEvent.Arguments.Text);
         }
@@ -572,8 +572,8 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Ace", "Spades"));
 
             // Act
             var score = sut.GetScore("Player");
@@ -588,9 +588,9 @@ namespace GamesTests.GamesTests
             // Arrange
             var sut = new Blackjack();
 
-            sut.PlayerHand.Add(new Card("King", "Spades"));
-            sut.PlayerHand.Add(new Card("6", "Spades"));
-            sut.PlayerHand.Add(new Card("Ace", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("King", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("6", "Spades"));
+            sut.PlayerHand.Cards.Add(new Card("Ace", "Spades"));
 
             // Act
             var score = sut.GetScore("Player");

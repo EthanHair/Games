@@ -11,28 +11,27 @@
     {
         <MudItem>
             <MudCard Elevation="25" Style="display: flex; padding: 16px; flex-direction: column; align-items: center;">
-                <MudSelect T="int" @bind-Value="NumberOfSides" Label="Enter the number of sides" Variant="Variant.Outlined" 
-                           AnchorOrigin="Origin.BottomCenter" Style="margin: 8px;">
-                    @foreach (int i in Die._sides.Keys)
-                    {
-                        <MudSelectItem T="int" Value="i" />
-                    }
-                </MudSelect>
+                <MudNumericField @bind-Value="NumberOfSides" Label="Enter the number of sides"
+                             Variant="Variant.Outlined" Style="margin: 8px;" />
                 <MudNumericField @bind-Value="NumberOfDie" Label="Enter the number of die"
-                                 Variant="Variant.Outlined" Style="margin: 8px;" />
+                             Variant="Variant.Outlined" Style="margin: 8px;" />
                 <MudNumericField @bind-Value="NumberOfRolls" Label="Enter the number of rolls"
-                                 Variant="Variant.Outlined" Style="margin: 8px;" />
-                <MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Dark" 
-                           OnClick="Submit" Style="margin: 8px;">Roll</MudButton>
+                             Variant="Variant.Outlined" Style="margin: 8px;" />
+                <MudButton Variant="Variant.Filled" Size="Size.Large" Color="Color.Dark"
+                       OnClick="RollDice" Style="margin: 8px;">Roll</MudButton>
             </MudCard>
         </MudItem>
     }
     else
     {
-        <MudItem xs="12" Style="display: flex; justify-content: center; gap: 8px">
-            <MudText Typo="Typo.h6">Number of Sides: @NumberOfSides</MudText>
-            <MudText Typo="Typo.h6">Number of Die: @NumberOfDie</MudText>
-            <MudText Typo="Typo.h6">Number of Rolls: @NumberOfRolls</MudText>
+        <MudItem xs="12" Style="display: flex; justify-content: center;">
+            <MudGrid Justify="Justify.Center">
+                <MudItem xs="4">
+                    <MudText Typo="Typo.subtitle1" Style="display: flex; justify-content: center;">
+                        Elapsed Time For This Roll: @ElapsedTime
+                    </MudText>
+                </MudItem>
+            </MudGrid>
         </MudItem>
         @foreach (int i in result.Keys)
         {
@@ -40,17 +39,68 @@
                 <MudText Typo="Typo.subtitle1">@i: @result[i] (@GetPercent(result[i]))</MudText>
             </MudItem>
             <MudItem xs="10" Style="margin-left: 16px; display: flex; align-items: center;">
-                <MudProgressLinear Value="result[i]" Min="0" Max="@MaxValueForProgressBars" 
-                                   Color="Color.Primary" Rounded="true" Size="Size.Large"/>
+                <MudProgressLinear Value="result[i]" Min="0" Max="@MaxValueForProgressBars"
+                           Color="Color.Primary" Rounded="true" Size="Size.Large" />
             </MudItem>
         }
         <MudItem xs="12"><MudSpacer /></MudItem>
-        <MudItem>
-            <MudButton Variant="Variant.Filled"
-                   Size="Size.Large" Color="Color.Error"
-                   Style="margin: 16px" OnClick="Reset">
-                Reset
-            </MudButton>
-        </MudItem>
+        @if (ShowChart)
+        {
+            <MudItem>
+                <MudCard Elevation="25" Style="display: flex; padding: 8px; flex-direction: row; align-items: center; justify-content: center;">
+                    <MudChart ChartType="ChartType.Line" ChartSeries="@chartResult"
+                      XAxisLabels="@axisLabels" Height="350px"
+                      Style="min-width: 60vw; display: flex; padding: 8px; flex-direction: column; align-items: center; justify-content: center;"
+                      ChartOptions="chartOptions">
+                    </MudChart>
+                </MudCard>
+            </MudItem>
+            <MudItem xs="12" Style="display: flex; justify-content: center;">
+                <MudGrid Justify="Justify.Center">
+                    <MudItem xs="12" Style="display: flex; justify-content: center;">
+                        <MudText Typo="Typo.h6">Stats</MudText>
+                    </MudItem>
+                    <MudItem xs="2" Style="display: flex; justify-content: center;">
+                        <MudText Typo="Typo.subtitle1">Number of Sides: @NumberOfSides</MudText>
+                    </MudItem>
+                    <MudItem xs="2" Style="display: flex; justify-content: center;">
+                        <MudText Typo="Typo.subtitle1">Number of Die: @NumberOfDie</MudText>
+                    </MudItem>
+                    <MudItem xs="2" Style="display: flex; justify-content: center;">
+                        <MudText Typo="Typo.subtitle1">Number of Rolls: @NumberOfRolls</MudText>
+                    </MudItem>
+                    <MudItem xs="2" Style="display: flex; justify-content: center;">
+                        <MudText Typo="Typo.subtitle1">Number of Executions: @RollNumber</MudText>
+                    </MudItem>
+                    <MudItem xs="12">
+                        <MudDivider />
+                    </MudItem>
+                    @foreach (int i in result.Keys)
+                    {
+                        <MudItem xs="2" Style="display: flex; justify-content: center;">
+                            <MudText Typo="Typo.subtitle1">
+                                @(String.Format("Average for {0}: ", i) +
+                                    String.Format("{0:0.0} ", (statsDict[i] / RollNumber)) +
+                                    String.Format("({0:0.000}%)", (((statsDict[i] / RollNumber) / NumberOfRolls) * 100)))
+                            </MudText>
+                        </MudItem>
+                    }
+                </MudGrid>
+            </MudItem>
+            <MudItem xs="12"><MudSpacer /></MudItem>
+            <MudItem>
+                <MudButtonGroup Variant="Variant.Filled"
+                        Size="Size.Large"
+                        Style="margin: 16px"
+                        Color="Color.Dark">
+                    <MudButton OnClick="RollAgain">
+                        Roll Again
+                    </MudButton>
+                    <MudButton OnClick="Reset">
+                        Reset
+                    </MudButton>
+                </MudButtonGroup>
+            </MudItem>
+        }
     }
 </MudGrid>

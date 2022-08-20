@@ -53,8 +53,8 @@
 		var cut = RenderComponent<BlackjackPage>();
 		// Act
 		cut.Instance.gameStart = true;
-		cut.Instance._blackjackGame.PlayerHand.Add(new Card("King", "Spades"));
-		cut.Instance._blackjackGame.PlayerHand.Add(new Card("Queen", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Cards.Add(new Card("King", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
 		cut.Instance.PlayerHit();
 		// Assert
 		Assert.True(cut.Instance.gameOver);
@@ -69,8 +69,8 @@
 		var cut = RenderComponent<BlackjackPage>();
 		// Act
 		cut.Instance.gameStart = true;
-		cut.Instance._blackjackGame.PlayerHand.Add(new Card("King", "Spades"));
-		cut.Instance._blackjackGame.PlayerHand.Add(new Card("Queen", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Cards.Add(new Card("King", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Cards.Add(new Card("Queen", "Spades"));
 		for (int i = 0; i < 4; i++)
 		{
 			cut.Instance._blackjackGame._deck.DrawCard();
@@ -90,10 +90,10 @@
 		var cut = RenderComponent<BlackjackPage>();
 		// Act
 		cut.Instance.gameStart = true;
-		cut.Instance._blackjackGame.DealerHand.Add(new Card("King", "Spades"));
-		cut.Instance._blackjackGame.DealerHand.Add(new Card("Queen", "Spades"));
-		cut.Instance._blackjackGame.PlayerHand.Add(new Card("King", "Spades"));
-		cut.Instance._blackjackGame.PlayerHand.Add(new Card("6", "Spades"));
+		cut.Instance._blackjackGame.DealerHand.Cards.Add(new Card("King", "Spades"));
+		cut.Instance._blackjackGame.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Cards.Add(new Card("King", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Cards.Add(new Card("6", "Spades"));
 		await cut.Instance.PlayerStay();
 		// Assert
 		Assert.True(cut.Instance.gameOver);
@@ -108,10 +108,10 @@
 		var cut = RenderComponent<BlackjackPage>();
 		// Act
 		cut.Instance.gameStart = true;
-		cut.Instance._blackjackGame.DealerHand.Add(new Card("King", "Spades"));
-		cut.Instance._blackjackGame.DealerHand.Add(new Card("Queen", "Spades"));
-		cut.Instance._blackjackGame.PlayerHand.Add(new Card("King", "Spades"));
-		cut.Instance._blackjackGame.PlayerHand.Add(new Card("6", "Spades"));
+		cut.Instance._blackjackGame.DealerHand.Cards.Add(new Card("King", "Spades"));
+		cut.Instance._blackjackGame.DealerHand.Cards.Add(new Card("Queen", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Cards.Add(new Card("King", "Spades"));
+		cut.Instance._blackjackGame.PlayerHand.Cards.Add(new Card("6", "Spades"));
 		cut.Instance.PlayerHit();
 		await cut.Instance.PlayerStay();
 		// Assert

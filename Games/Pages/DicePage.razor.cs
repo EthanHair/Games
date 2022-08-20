@@ -1,59 +1,121 @@
 ﻿using Games.Classes;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.SignalR.Client;
+using Microsoft.JSInterop;
 using MudBlazor;
+using System.Collections.Concurrent;
+using System.Diagnostics;
 
 namespace Games.Pages
 {
     public partial class DicePage
     {
         [Inject]
-        private ISnackbar Snackbar { get; set; }
+        public IJSRuntime JSRuntime { get; set; }
 
-        public List<Die> dice = new List<Die>();
+        [Inject]
+        public ISnackbar Snackbar { get; set; }
+
+        public HubConnection hubConnection;
 
         public Dictionary<int, int> result = new Dictionary<int, int>();
+
+        // Chart
+        public List<ChartSeries> chartResult = new List<ChartSeries>();
+
+        public string[] axisLabels = new string[] { };
+
+        public double[] chartData = new double[] { };
+
+        public Dictionary<int, double> statsDict = new Dictionary<int, double>();
+
+        public ChartOptions chartOptions = new ChartOptions() { DisableLegend = true, LineStrokeWidth = 4 };
 
         public bool AskForInput = true;
 
         public int NumberOfSides = 0;
         public int NumberOfDie = 0;
         public int NumberOfRolls = 0;
-        public int MaxValueForProgressBars = 5;
+        public int MaxValueForProgressBars = 100;
+        public int RollNumber = 0;
+        public string ElapsedTime = "...";
+        public bool ShowChart;
 
-        public void CreateDiceListAndDict(int numSides, int numDie)
+        protected override async Task OnInitializedAsync()
         {
-            for (int i = 0; i < numDie; i++)
-            {
-                dice.Add(new Die(numSides));
-            }
+            hubConnection = new HubConnectionBuilder()
+                                .WithUrl("https://localhost:7053/dicerollhub")
+                                .Build();
 
-            for (int i = Die._sides[numSides].Min() + (NumberOfDie - 1); i <= Die._sides[numSides].Max() * NumberOfDie; i++)
+            hubConnection.On<List<int>>("SendRolls", (rolls) =>
+            {
+                foreach (int roll in rolls)
+                {
+                    if (result.ContainsKey(roll))
+                    {
+                        result[roll]++;
+                        MaxValueForProgressBars = Math.Max(MaxValueForProgressBars, (int)Math.Ceiling(result[roll] * 1.1));
+                    }
+                    else
+                    {
+                        Snackbar.Add("A roll was recieved but the result dictionary did not contain it", Severity.Warning);
+                    }
+                }
+                StateHasChanged();
+            });
+
+            hubConnection.On<string>("RollStarted", (message) =>
+            {
+                Snackbar.Add(message, Severity.Info);
+                StateHasChanged();
+            });
+
+            hubConnection.On<string>("RollFinished", (elapsedTime) =>
+            {
+                ElapsedTime = elapsedTime;
+                RollNumber++;
+                CreateChart();
+                Snackbar.Add("The roll completed", Severity.Success);
+                StateHasChanged();
+            });
+
+            await hubConnection.StartAsync();
+        }
+
+        public void CreateDiceListAndDict()
+        {
+            for (int i = NumberOfDie; i <= NumberOfSides * NumberOfDie; i++)
             {
                 result.Add(i, 0);
+                statsDict.Add(i, 0);
             }
         }
 
-        public void RollDice(int numSides, int numDie, int numRolls)
+        public async Task RollDice()
         {
-            CreateDiceListAndDict(numSides, numDie);
+            CreateDiceListAndDict();
+
+            Snackbar.Add("A roll was requested", Severity.Info);
 
             AskForInput = false;
 
-            for (int i = 0; i < numRolls; i++)
+            MaxValueForProgressBars = (int)Math.Ceiling((double)(NumberOfRolls / NumberOfSides));
+
+            await JSRuntime.InvokeVoidAsync("blazorInterop.rollDice", NumberOfDie, NumberOfSides, NumberOfRolls);
+        }
+
+        public async Task RollAgain()
+        {
+            Snackbar.Add("A roll was requested", Severity.Info);
+
+            ElapsedTime = "...";
+
+            foreach (var key in result.Keys)
             {
-                var roll = 0;
-
-                foreach (Die die in dice)
-                {
-                    roll += die.Roll();
-                }
-
-                result[roll]++;
-
-                MaxValueForProgressBars = Math.Max(MaxValueForProgressBars, result[roll]);
+                result[key] = 0;
             }
-            
-            MaxValueForProgressBars += (int)Math.Ceiling(0.10 * MaxValueForProgressBars);
+
+            await JSRuntime.InvokeVoidAsync("blazorInterop.rollDice", NumberOfDie, NumberOfSides, NumberOfRolls);
         }
 
         public string GetPercent(int value)
@@ -62,24 +124,35 @@ namespace Games.Pages
             return String.Format("{0:0.00}%", percent);
         }
 
-        public void Submit()
+        public void CreateChart()
         {
-            if (Die._sides.Keys.Contains(NumberOfSides))
+            var data = new List<double>();
+            var labels = new List<string>();
+            if (result.Keys != null)
             {
-                RollDice(NumberOfSides, NumberOfDie, NumberOfRolls);
+                foreach (int key in result.Keys)
+                {
+                    labels.Add(key.ToString());
+                    data.Add(result[key]);
+                    statsDict[key] += result[key];
+                }
             }
-            else
-            {
-                Snackbar.Add("The number of sides you have selected is not valid", Severity.Error);
-            }
+            axisLabels = labels.ToArray();
+            chartData = data.ToArray();
+            chartResult.Add(new ChartSeries() { Name = String.Format("Roll {0}", RollNumber), Data = chartData });
+            ShowChart = true;
         }
 
         public void Reset()
         {
             AskForInput = true;
             MaxValueForProgressBars = 5;
-            dice = new List<Die>();
+            RollNumber = 0;
             result = new Dictionary<int, int>();
+            statsDict = new Dictionary<int, double>();
+            axisLabels = new string[] { };
+            chartData = new double[] { };
+            chartResult.Clear();
         }
     }
 }
